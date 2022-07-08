@@ -3,13 +3,18 @@
 namespace Controllers;
 
 use MVC\Router;
+use Model\Producto;
 
 class PageController{
     public static function inicio(Router $router) {
-        $alertas = [];
+        session_start();
+        
+        /*$consulta= "SELECT * FROM  productos" ;
+        $productos = Producto::SQL($consulta);*/
+        $productos = Producto::all();
 
         $router->render('home/index', [
-            'alertas' => $alertas
+            'productos' => $productos
         ]);
     }
 

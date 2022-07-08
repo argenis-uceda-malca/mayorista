@@ -10,25 +10,31 @@ const cita = {
     servicios: []
 }
 
+const venta = {
+    id: '',
+    total: '',
+    fecha: '',
+}
 document.addEventListener('DOMContentLoaded', function () {
     iniciarApp();
 });
 
 function iniciarApp() {
     //mostrarSeccion(); // Muestra y oculta las secciones
-    tabs(); // Cambia la sección cuando se presionen los tabs
+    //tabs(); // Cambia la sección cuando se presionen los tabs
     //botonesPaginador(); // Agrega o quita los botones del paginador
     //paginaSiguiente(); 
     //paginaAnterior();
+    eliminarCarrito();
+    cambiarCantidad();
+    //consultarAPI(); // Consulta la API en el backend de PHP
 
-    consultarAPI(); // Consulta la API en el backend de PHP
+    //idCliente();
+    //nombreCliente(); // Añade el nombre del cliente al objeto de cita
+    //seleccionarFecha(); // Añade la fecha de la cita en el objeto
+    //seleccionarHora(); // Añade la hora de la cita en el objeto
 
-    idCliente();
-    nombreCliente(); // Añade el nombre del cliente al objeto de cita
-    seleccionarFecha(); // Añade la fecha de la cita en el objeto
-    seleccionarHora(); // Añade la hora de la cita en el objeto
-
-    mostrarResumen(); // Muestra el resumen de la cita
+    //mostrarResumen(); // Muestra el resumen de la cita
 }
 
 function mostrarSeccion() {
@@ -112,6 +118,80 @@ function paginaSiguiente() {
     })
 }
 
+function eliminarCarrito() {
+    $('.btnEliminar').on('click', function () {
+        var id = $(this).data("id");
+        var boton = $('#btnEliminar'+id);
+        $.ajax({
+            method: "POST",
+            url: "/eliminarCarrito",
+            data: {
+                id: id
+            }
+        }).done(function (respuesta) {
+            boton.parent('td').parent('tr').remove();
+            /*setTimeout(() => {
+                //window.location.href = "http://localhost:3000/cart";
+            }, 100);*/
+        });
+    });
+}
+
+function cambiarCantidad() {
+    $('.txtCantidad').keyup(function () {
+        var cantidad = $(this).val();
+        var precio = $(this).data('precio');
+        var id = $(this).data('id');
+        incrementar(cantidad, precio, id);
+    });
+    $('.qtybtn').click(function () {
+        var $button = $(this);
+        var oldValue = $button.parent().find('input').val();
+        if ($button.hasClass('inc')) {
+            var newVal = parseFloat(oldValue) + 1;
+        } else {
+            // Don't allow decrementing below zero
+            if (oldValue > 0) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 0;
+            }
+        }
+        $button.parent().find('input').val(newVal);
+
+        var precio = $(this).parent('div').find('input').data('precio');
+        var id = $(this).parent('div').find('input').data('id');
+        var cantidad = $(this).parent('div').find('input').val();
+        incrementar(cantidad, precio, id);
+        /*console.log(oldValue);
+        console.log(newVal);*/
+    });
+}
+
+function incrementar(cantidad, precio, id) {
+
+    var mul = parseFloat(cantidad) * parseFloat(precio);
+    $(".cant" + id).text("S/. " + mul);
+    actualizarTotal(mul);
+    $.ajax({
+        method: "POST",
+        url: "/actualizarCarrito",
+        data: {
+            id: id,
+            cantidad: cantidad
+        }
+    }).done(function (respuesta) {
+        
+    });
+}
+
+function actualizarTotal(mul){
+    var total = $("#totalCarrito").val();
+    var totalNuevo = mul + total;
+    $("#totalCarrito").text("S/. " + totalNuevo);
+    $(".totalCarrito").text("S/. " + totalNuevo);
+}
+
 async function consultarAPI() {
 
     try {
@@ -141,7 +221,7 @@ function mostrarServicios(servicios) {
 
         const servicioDiv = document.createElement('DIV');
         servicioDiv.classList.add('servicio');
-        servicioDiv.dataset.idServicio = id;
+        servicioDiv.dataset.idServicio = id; // data-id-servicio = id
         servicioDiv.onclick = function () {
             seleccionarServicio(servicio);
         }
@@ -159,8 +239,6 @@ function mostrarProductos(servicios) {
         const { id, nombre, precio } = producto;
 
         const nombreProducto = document.createElement('H6');
-
-
 
         const tabpane = document.createElement('DIV');
         const conw31 = document.createElement('DIV');
@@ -182,21 +260,22 @@ function mostrarProductos(servicios) {
         const button = document.createElement('button');
 
 
-        button.setAttribute("data-id", "1");
+        button.setAttribute("data-id", id);
         button.setAttribute("data-name", "Moong");
         button.setAttribute("data-summary", "summary 1");
         button.setAttribute("data-price", "1.50");
         button.setAttribute("data-quantity", "1");
         button.setAttribute("data-image", "img/of.png");
+        button.setAttribute("onclick", "window.location.href='/cart'");
 
-        a.setAttribute("href","#");
-        a.setAttribute("data-toggle","modal");
-        a.setAttribute("data-target","#myModal1");
-        
-        img.setAttribute("alt","")
-        img.setAttribute("src","/build/img/of.png")
+        a.setAttribute("href", "#");
+        a.setAttribute("data-toggle", "modal");
+        a.setAttribute("data-target", "#myModal1");
 
-        nombreProducto.textContent = nombre;
+        img.setAttribute("alt", "")
+        img.setAttribute("src", "/build/img/of.png")
+
+        nombreProducto.textContent = nombre + ' ID: ' + id;
         p.textContent = 'S/.' + precio;
         button.textContent = 'Agregar Producto'
         span_ofter.textContent = 'Oferta';
@@ -240,6 +319,7 @@ function mostrarProductos(servicios) {
         add.appendChild(button);
 
         document.querySelector('#tabProdcutos').appendChild(tabpane);
+
     });
 }
 

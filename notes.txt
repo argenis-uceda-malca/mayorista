@@ -1,0 +1,8 @@
+Cambiar en el carrito de comprar la accion eliminar por 
+VirtualDom -> problema: al darle regresar en el navegador
+me vuelve a agregar el producto q se encuentre en la URL
+-->todo funciona pero es mejorable
+
+
+falta implementar los botones de agregar y disminuir cantidades en el carrito de compra
+-->por alguna razon no puedo leer los nodos padres

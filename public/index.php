@@ -16,6 +16,9 @@ $router = new Router();
 ///Iniciar pagina
 $router->get('/', [PageController::class, 'inicio']);
 $router->get('/cart', [CartController::class, 'cart']);
+$router->post('/eliminarCarrito', [CartController::class, 'eliminarCarrito']);
+$router->post('/actualizarCarrito', [CartController::class, 'actualizarCarrito']);
+$router->get('/checkout', [CartController::class, 'checkout']);
 
 $router->get('/api/servicios', [APIController::class, 'index']);
 // Iniciar Sesión

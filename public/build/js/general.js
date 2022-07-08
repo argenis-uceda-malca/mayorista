@@ -1,0 +1,1 @@
+$(document).ready((function(){$(".btnEliminar").click((function(t){t.preventDefault();var a=$(this).data("id"),n=$(this);$.ajax({method:"POST",url:"/eliminarCarrito",data:{id:a}}).done((function(t){n.parent("td").parent("td").remove()}))}))}));
