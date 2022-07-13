@@ -5,7 +5,7 @@ namespace Model;
 class Venta extends ActiveRecord {
     // Base de datos
     protected static $tabla = 'ventas';
-    protected static $columnasDB = ['id', 'id_usuario', 'total', 'fecha'];
+    protected static $columnasDB = ['id', 'id_usuario', 'fecha'];
 
     public $id;
     public $id_usuario;
@@ -15,8 +15,7 @@ class Venta extends ActiveRecord {
     public function __construct($args = [])
     {
         $this->id = $args['id'] ?? null;
-        $this->id_usuario = $args['usuarioId'] ?? '';
-        $this->total = $args['total'] ?? '';
+        $this->id_usuario = $args['id_usuario'] ?? '';
         $this->fecha = $args['fecha'] ?? '';
     }
 }

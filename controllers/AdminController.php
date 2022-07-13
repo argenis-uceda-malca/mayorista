@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Model\AdminCita;
+
 use MVC\Router;
 
 class AdminController {
@@ -10,7 +11,7 @@ class AdminController {
         session_start();
 
         isAdmin();
-
+        
         $fecha = $_GET['fecha'] ?? date('Y-m-d');
         $fechas = explode('-', $fecha);
 

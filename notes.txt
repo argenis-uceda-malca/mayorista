@@ -4,5 +4,6 @@ me vuelve a agregar el producto q se encuentre en la URL
 -->todo funciona pero es mejorable
 
 
-falta implementar los botones de agregar y disminuir cantidades en el carrito de compra
--->por alguna razon no puedo leer los nodos padres
+Actualizar automaticamente la cantidad total al eliminar un producto del carrtio
+
+Corregir la actualizacion del monto en la pagina Cart

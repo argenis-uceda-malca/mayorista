@@ -27,6 +27,7 @@ function iniciarApp() {
     //paginaAnterior();
     eliminarCarrito();
     cambiarCantidad();
+    Verificarcheckbox();
     //consultarAPI(); // Consulta la API en el backend de PHP
 
     //idCliente();
@@ -121,7 +122,15 @@ function paginaSiguiente() {
 function eliminarCarrito() {
     $('.btnEliminar').on('click', function () {
         var id = $(this).data("id");
-        var boton = $('#btnEliminar'+id);
+        var precio = $(this).data("precio");
+        var cantidad = $(this).data("cantidad");
+        var oldValue = $(this).parent().parent().find('input').val();
+        var total = precio * oldValue;
+        var boton = $('#btnEliminar' + id);
+
+        console.log(oldValue);
+
+        actualizarTotal(total, 0);
         $.ajax({
             method: "POST",
             url: "/eliminarCarrito",
@@ -130,9 +139,13 @@ function eliminarCarrito() {
             }
         }).done(function (respuesta) {
             boton.parent('td').parent('tr').remove();
-            /*setTimeout(() => {
-                //window.location.href = "http://localhost:3000/cart";
-            }, 100);*/
+            Swal.fire({
+                position: 'bottom-end',
+                //icon: 'success',
+                title: 'Eliminado',
+                showConfirmButton: false,
+                timer: 600
+            })
         });
     });
 }
@@ -142,18 +155,31 @@ function cambiarCantidad() {
         var cantidad = $(this).val();
         var precio = $(this).data('precio');
         var id = $(this).data('id');
-        incrementar(cantidad, precio, id);
+
+        if (cantidad == "") {
+            $(this).val(parseFloat(0));
+            cantidad = 0;
+            //console.log($(this).val(parseFloat(0)));
+        }
+
+        incrementar(cantidad, precio, id, 3);
+
+
     });
     $('.qtybtn').click(function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
+
         if ($button.hasClass('inc')) {
             var newVal = parseFloat(oldValue) + 1;
+
         } else {
             // Don't allow decrementing below zero
             if (oldValue > 0) {
                 var newVal = parseFloat(oldValue) - 1;
             } else {
+                $button.css('pointer-events', 'none');
+                $button.css('cursor', 'not-allowed');
                 newVal = 0;
             }
         }
@@ -162,17 +188,36 @@ function cambiarCantidad() {
         var precio = $(this).parent('div').find('input').data('precio');
         var id = $(this).parent('div').find('input').data('id');
         var cantidad = $(this).parent('div').find('input').val();
-        incrementar(cantidad, precio, id);
-        /*console.log(oldValue);
-        console.log(newVal);*/
+
+        /*console.log(precio);
+        console.log(cantidad);*/
+
+        if ($button.hasClass('inc')) {
+            incrementar(cantidad, precio, id, 1);
+        } else {
+            incrementar(cantidad, precio, id, 2);
+        }
+
+
     });
 }
 
-function incrementar(cantidad, precio, id) {
-
+function incrementar(cantidad, precio, id, operacion) {
+    var inicio = $(".cant" + id).text();
     var mul = parseFloat(cantidad) * parseFloat(precio);
-    $(".cant" + id).text("S/. " + mul);
-    actualizarTotal(mul);
+    $(".cant" + id).text(mul);
+
+    if (operacion == 3) {
+        var resultado = parseInt(mul) - parseInt(inicio);
+        /* console.log(mul);
+         console.log(inicio);
+         console.log(resultado);*/
+        actualizarTotal(resultado, operacion);
+    } else {
+        if (cantidad != 0) {
+            actualizarTotal(precio, operacion);
+        }
+    }
     $.ajax({
         method: "POST",
         url: "/actualizarCarrito",
@@ -181,15 +226,43 @@ function incrementar(cantidad, precio, id) {
             cantidad: cantidad
         }
     }).done(function (respuesta) {
-        
+
     });
 }
 
-function actualizarTotal(mul){
-    var total = $("#totalCarrito").val();
-    var totalNuevo = mul + total;
-    $("#totalCarrito").text("S/. " + totalNuevo);
-    $(".totalCarrito").text("S/. " + totalNuevo);
+function actualizarTotal(mul, operacion) {
+
+    /*const total2 = document.getElementById("totalCarrito");
+    var monto = $(total2).data("total");*/
+    var total = parseFloat($("#totalCarrito").text());
+    if (operacion == 0) {
+        console.log(total);
+        console.log(mul);
+        var totalNuevo = total - mul;
+    } else if (operacion == 1) {
+        var totalNuevo = mul + total;
+        console.log("suma");
+    } else if (operacion == 2) {
+        var totalNuevo = total - mul;
+        console.log("resta");
+    } else {
+        var totalNuevo = total + mul;
+    }
+    $("#totalCarrito").text(totalNuevo);
+    $(".totalCarrito").text(totalNuevo);
+
+}
+
+function Verificarcheckbox() {
+    $('#acc-or').click(function () {
+        var miCheckbox = $(this);
+
+        if (miCheckbox.prop('checked')) {
+            $(this).prop('value','1');
+        } else {
+            $(this).prop('value','0');
+        }
+    });
 }
 
 async function consultarAPI() {

@@ -15,4 +15,6 @@ $(document).ready(function() {
             boton.parent('td').parent('td').remove();
         });
     });
+
+    
 });

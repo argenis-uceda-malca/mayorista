@@ -97,10 +97,11 @@
 
                       </td>
                       <td class="shoping__cart__total cant<?php echo $arregloCarrito[$i]['id']; ?>">
-                        S/. <?php echo $arregloCarrito[$i]['precio'] * $arregloCarrito[$i]['cantidad']; ?>
+                        <span>S/. </span>
+                        <?php echo $arregloCarrito[$i]['precio'] * $arregloCarrito[$i]['cantidad']; ?>
                       </td>
                       <td class="shoping__cart__item__close">
-                        <span class="icon_close btnEliminar" id="btnEliminar<?php echo $arregloCarrito[$i]['id'] ?>" data-id="<?php echo $arregloCarrito[$i]['id'] ?>"></span>
+                        <span class="icon_close btnEliminar" id="btnEliminar<?php echo $arregloCarrito[$i]['id'] ?>" data-id="<?php echo $arregloCarrito[$i]['id'] ?>" data-precio="<?php echo $arregloCarrito[$i]['precio']; ?>" data-cantidad="<?php echo $arregloCarrito[$i]['cantidad']; ?>"></span>
                       </td>
                     </tr>
                 <?php }
@@ -113,7 +114,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="shoping__cart__btns">
-            <a href="/cart" class="primary-btn cart-btn">CONTINUAL COMPRANDO</a>
+            <a href="/" class="primary-btn cart-btn">CONTINUAL COMPRANDO</a>
             <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
               Actualizar Carrito</a>
           </div>
@@ -133,10 +134,10 @@
           <div class="shoping__checkout">
             <h5>Total del carrito</h5>
             <ul>
-              <li>Subtotal <span class="totalCarrito">S/. <?php echo $total ?></span></li>
-              <li>Total <span id="totalCarrito">S/. <?php echo $total ?></span></li>
+              <li>Subtotal <span class="totalCarrito" ><?php echo $total ?></span><span>S/. </span></li>
+              <li>Total <span id="totalCarrito" data-total="<?php echo $total ?>"><?php echo $total ?></span><span>S/. </span></li>
             </ul>
-            <a href="/checkout" class="primary-btn">CONTINUAR CON CHECKOUT</a>
+            <a href="/checkout" class="primary-btn">CONTINUAR CON EL PAGO</a>
           </div>
         </div>
       </div>
@@ -159,6 +160,7 @@
     <script src='/build/js/mixitup.min.js'></script>
     <script src='/build/js/owl.carousel.min.js'></script>
     <script src='/build/js/main.js'></script>
+    <script src='//cdn.jsdelivr.net/npm/sweetalert2@11'></script>
 
     <script src='build/js/app.js'></script>
     ";
