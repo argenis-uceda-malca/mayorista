@@ -1,1 +1,1 @@
-$(document).ready((function(){$(".btnEliminar").click((function(t){t.preventDefault();var a=$(this).data("id"),n=$(this);$.ajax({method:"POST",url:"/eliminarCarrito",data:{id:a}}).done((function(t){n.parent("td").parent("td").remove()}))}))}));
+!function(){"use strict";var t=document.querySelectorAll(".needs-validation");Array.prototype.slice.call(t).forEach((function(t){t.addEventListener("submit",(function(e){t.checkValidity()||(e.preventDefault(),e.stopPropagation()),t.classList.add("was-validated")}),!1)}))}();

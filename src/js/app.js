@@ -266,7 +266,6 @@ function Verificarcheckbox() {
 }
 
 async function consultarAPI() {
-
     try {
         const url = 'http://localhost:3000/api/servicios';
         //const url = 'http://localhost:9000/api/';

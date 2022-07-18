@@ -11,6 +11,7 @@ use Controllers\ServicioController;
 use Controllers\PageController;
 use Controllers\CartController;
 use Controllers\AdministradorController;
+use Controllers\ProductoController;
 use MVC\Router;
 $router = new Router();
 
@@ -25,6 +26,15 @@ $router->get('/resumen', [CartController::class, 'resumen']);
 
 //Seccion Administrator
 $router->get('/admin', [AdministradorController::class, 'home']);
+$router->post('/getInfo', [AdministradorController::class, 'getInfo']);
+$router->get('/viewProducto', [ProductoController::class, 'viewProducto']);
+$router->get('/editProducto', [ProductoController::class, 'editProducto']);
+$router->post('/editProducto', [ProductoController::class, 'editProducto']);
+$router->get('/addProducto', [ProductoController::class, 'addProducto']);
+
+$router->get('/login', [AdministradorController::class, 'login']);
+$router->post('/login', [AdministradorController::class, 'login']);
+$router->get('/logout', [AdministradorController::class, 'logout']);
 
 $router->get('/api/servicios', [APIController::class, 'index']);
 

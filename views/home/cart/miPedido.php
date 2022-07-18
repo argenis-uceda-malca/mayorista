@@ -13,7 +13,7 @@ MercadoPago\SDK::setAccessToken('TEST-2658067067371995-091118-9a053d5a9a56767ce6
 // Crea un objeto de preferencia
 $preference = new MercadoPago\Preference();
 
-$preference-> back_urls = array (
+$preference->back_urls = array(
     "success" => "https://localhost/",
     "failure" => "http://localhost/",
     "pending" => "http://localhost/"
@@ -38,12 +38,35 @@ $preference->save();
             <div class="col-lg-5 col-md-6 ">
                 <div class="blog__sidebar">
                     <div class="blog__sidebar__item">
+                        <h4>Tus Datos</h4>
+                        <div class="blog__sidebar__recent">
+                            <?php
+                            $total = 0;
+                            foreach ($ventas as $key => $venta) {
+                                $nombres = $venta->nombres;
+                                $apellidos = $venta->apellidos;
+                                $dni = $venta->dni;
+                                $telefono = $venta->telefono;
+                                $correo = $venta->email;
+                            }
+                            ?>
+                                <div class="blog__sidebar__recent__item">
+                                    <div class="blog__sidebar__recent__item__text">
+                                        <p><b>Nombre: </b><?php echo $nombres; ?> <?php echo $apellidos; ?><br /> </p>
+                                        <p><b>N° DNI: </b><?php echo $dni; ?><br /> </p>
+                                        <p><b>Telefono: </b><?php echo $telefono; ?><br /> </p>
+                                        <p><b>Correo: </b><?php echo $correo; ?><br /> </p>
+                                    </div>
+                                </div>
+                            <?php  ?>
+                        </div>
                         <h4>Tu pedido</h4>
                         <div class="blog__sidebar__recent">
                             <?php
                             $total = 0;
                             foreach ($ventas as $key => $venta) {
-                                $nombre = $venta->nombre;
+                                $nombre = $venta->nombres;
+                                $apellidos = $venta->apellidos;
                                 $total = $total + $venta->total
                             ?>
                                 <div class="blog__sidebar__recent__item">
@@ -51,9 +74,9 @@ $preference->save();
                                         <img src="build/img/blog/sidebar/sr-1.jpg" alt="">
                                     </div>
                                     <div class="blog__sidebar__recent__item__text">
-                                        <h6>Producto:  <span><?php echo $venta->producto; ?><br /> </span></h6>
-                                        <h6>Cantidad:  <span><?php echo $venta->cantidad; ?><br /> </span> </h6>
-                                        <h6>SubTotal:  <span>S/.<?php echo $venta->total; ?><br /> </span></h6>
+                                        <p style="margin:0"><b>Producto: </b><?php echo $venta->producto; ?> </p>
+                                        <p style="margin:0"><b>Cantidad: </b><?php echo $venta->cantidad; ?> </p>
+                                        <p style="margin:0"><b>SubTotal: </b>S/.<?php echo $venta->total; ?> </p>
                                     </div>
                                 </div>
                             <?php } ?>
@@ -73,35 +96,35 @@ $preference->save();
                         <span></span>
                     </div>
                     <div class="product__details__price">S/. <?php echo $total; ?></div>
-                    <p><?php echo $nombre; ?> estas a un paso de completar tu compra, verifica que los datos de tu compra sean
+                    <p><?php echo $nombre; ?> <?php echo $apellidos; ?> estas a un paso de completar tu compra, verifica que los datos de tu compra sean
                         correctos </p>
 
 
                     <div class="row justify-content-start align-items-center"">
-                        <div class="col-4">
-                            <img src="build/img/mercadopago.jpg" >
-                        </div>
-                        <div class="cho-container" class="col-8 align-items-center"></div>
-
+                        <div class=" col-4">
+                        <img src="build/img/mercadopago.jpg">
                     </div>
+                    <div class="cho-container" class="col-8 align-items-center"></div>
 
-
-
-                    <ul>
-
-                        <li><b>Ecuentranos en </b>
-                            <div class="share">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
-            </div>
 
+
+
+                <ul>
+
+                    <li><b>Ecuentranos en </b>
+                        <div class="share">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
+
+    </div>
     </div>
 </section>
 

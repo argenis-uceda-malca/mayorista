@@ -31,20 +31,32 @@ include_once __DIR__ . '../../../templates/header.php';
         </div>
         <div class="checkout__form">
             <h4>Detalles de facturación</h4>
-            <form method="POST" action="/crearVenta">
+            <form method="POST" action="/crearVenta" class="needs-validation" novalidate>
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Nombres<span>*</span></p>
-                                    <input id="nombre" name="nombre" placeholder="Ingresa tus Nombres" type="text">
+                                    <input class="form-control" id="nombre" name="nombres" placeholder="Ingresa tus Nombres" type="text" required>
+                                    <div class="valid-feedback">
+                                        Todo bien
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Es necesario poner el Nombre completo
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Apellidos<span>*</span></p>
-                                    <input type="text" id="apellido" name="apellido" placeholder="Ingresa tus Apellidos">
+                                    <input type="text" id="apellido" name="apellidos" placeholder="Ingresa tus Apellidos" class="form-control" required>
+                                    <div class="valid-feedback">
+                                        Todo bien
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Es necesario poner el Apellido
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +65,13 @@ include_once __DIR__ . '../../../templates/header.php';
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Número de DNI<span>*</span></p>
-                                    <input type="text">
+                                    <input type="text" name="dni" placeholder="Ingrese su DNI" class="form-control" required >
+                                    <div class="valid-feedback ">
+                                        Todo bien
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Es necesario poner el DNI
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -65,14 +83,14 @@ include_once __DIR__ . '../../../templates/header.php';
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
-                                    <p>Phone<span>*</span></p>
-                                    <input type="text">
+                                    <p>Celular<span>*</span></p>
+                                    <input type="text" name="telefono" class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Email<span>*</span></p>
-                                    <input type="text">
+                                    <input type="text" name="email" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -125,7 +143,6 @@ include_once __DIR__ . '../../../templates/header.php';
                             </div>
                             <p>Si desea pagar contra entrega seleccione la casilla</p>
 
-                            <input type="hidden" name="id_usuario" value="1">
                             <input type="hidden" name="fecha" value="2022">
                             <button type="submit" class="site-btn">CONFIRMAR</button>
 
@@ -157,5 +174,6 @@ $script = "
     <script src='/build/js/main.js'></script>
 
     <script src='build/js/app.js'></script>
+    <script src='build/js/general.js'></script>
     ";
 ?>
