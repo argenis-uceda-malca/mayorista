@@ -59,13 +59,23 @@ class ProductoController
     {
         session_start();
         isAuth();
-
-        $producto = new Producto($_POST);
-        $resultado= $producto->guardar($producto);
-
-        $router->renderAdmin('home/addProducto', [
-            'resultado' => $resultado
-        ]);
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $producto = new Producto($_POST);
+            $resultado= $producto->guardar($producto);
+            if($resultado){
+                $respuesta = array(
+                    'resultado' => 'exito',
+                    'producto' => $producto,
+                    'resultado2' => $resultado,
+                    'post' => $_POST
+                );
+            }else{
+                $respuesta = array(
+                    'resultado' => 'error'
+                );
+            }
+        }
+        die(json_encode($respuesta));
     }
 
     public static function editarProducto(){
@@ -88,8 +98,6 @@ class ProductoController
                     'resultado' => 'error'
                 );
             }
-            
-            
         }
         die(json_encode($respuesta));
     }

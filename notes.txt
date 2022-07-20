@@ -20,3 +20,8 @@ revisar si el archivo eliminarCarrito.php sirve o no (le falta el atributo de id
 agregar una condicion de que si exxiste la SESSION['admin'] o SESSION['USUARIO'] y doy regresar al 
 login que me autodirija denuevo al panel de administracion. ... solamente me dejara estar en login cuando
 no exista las SESSION['admin'] o SESSION['USUARIO']
+
+agregar fecha en las compras , para mostrarlo en el admin 
+
+
+IMPORTANTE limpiar las entradas de los input (los espacios vacios, las tabulaciones, etc)

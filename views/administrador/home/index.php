@@ -77,11 +77,11 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                                 S/. <?php echo $venta->total; ?>
                                             </td>
                                             <td class="border-top-0 text-center px-2 py-4">
-                                                <button type="button" class="btn btn-primary btnModal" data-toggle="modal" data-target="#myModal" data-id="<?php echo $venta->ventaId; ?>" id="<?php echo $venta->ventaId; ?>">Ver </button>
+                                                <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-secondary btnModal" data-toggle="modal" data-target="#myModal" data-id="<?php echo $venta->ventaId; ?>" id="<?php echo $venta->ventaId; ?>"><i class="fas fa-eye"></i> Ver </button>
 
                                             </td>
                                             <td class="font-weight-medium text-dark border-top-0 px-2 py-4">
-                                                <a href="#" type="button" class="btn bg-maroon btn-flat margin borrar_registro"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                <a href="#" type="button" class="btn waves-effect waves-light btn-rounded btn-outline-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
 
