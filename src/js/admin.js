@@ -4,17 +4,20 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function iniciarApp() {
+    AddProducto();
+    ActualizarProducto();
     verificarLogin();
     editarTabla();
     ObtenerProductoPorId();
-    ActualizarProducto();
+    ActualizarProductoModal();
 }
 
 function verificarLogin() {
     $('#login').on('submit', function (e) {
+
         e.preventDefault();
         var datos = $(this).serializeArray();
-        // console.log(datos);
+        alert("hola");
         $.ajax({
             type: $(this).attr('method'),
             data: datos,
@@ -62,10 +65,19 @@ function editarTabla() {
         'autoWidth': false,
         'pageLength': 20,
         'language': {
-            info: "Mostrando del _START_ a _END_ de _TOTAL_ resultados",
+            info: "Mostrando del _START_ al _END_ de _TOTAL_ resultados",
             emptyaTable: "No hay registros",
             infoEmpty: "0 Registros",
-            search: "Buscar"
+            search: "Buscar",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            
         }
     });
 }
@@ -73,7 +85,6 @@ function editarTabla() {
 function ObtenerProductoPorId() {
     $('.btnModal').on('click', function () {
         var ventaId = $(this).data("id");
-
         //console.log(ventaId);
         $.ajax({
             method: "POST",
@@ -108,26 +119,30 @@ function ObtenerProductoPorId() {
 }
 
 function ActualizarProducto() {
-    $('#editProducto').on('submit', function (e) {
+
+    $('#editarProducto').on('submit', function (e) {
         e.preventDefault();
+        //alert("hola");
         var datos = $(this).serializeArray();
-        
+
         $.ajax({
-            type: $(this).attr('method'),
+            type: 'POST',
             data: datos,
-            url: "/update",
+            url: "/editarProducto",
             dataType: 'json',
-            success: function (data){
+            success: function (data) {
+                console.log(data);
                 var resultado = data;
                 if (resultado.resultado == 'exito') {
                     swal.fire(
-                        'Exitos',
+                        'Exito',
                         'Actualizado correctamente ',
                         'success'
-                    )
-                    setTimeout(function () {
-                        window.location.href = '/admin';
-                    }, 600);
+                    ),
+                        setTimeout(function () {
+                            window.location.href = '/viewProducto';
+                        }, 600);
+
                 }
                 if (resultado.resultado == 'error') {
                     swal.fire(
@@ -136,7 +151,7 @@ function ActualizarProducto() {
                         'error'
                     )
                 }
-            }, 
+            },
             error: function (e) {
                 swal.fire(
                     'UPS!!!',
@@ -146,4 +161,51 @@ function ActualizarProducto() {
             }
         });
     });
+}
+
+function AddProducto() {
+    $('#addProducto').on('submit', function (e) {
+        e.preventDefault();
+        alert('Agregar producto');
+    });
+}
+
+function ActualizarProductoModal() {
+    $('.editbtn').on('click', function (e) {
+        $tr = $(this).closest("tr");
+        var datos = $tr.children("td").map(function () {
+            return $(this).text();
+        });
+        console.log(datos[1]);
+        $('#id').val(datos[0]);
+        $('#nombre').val(datos[1]);
+        $('#precio').val(datos[2]);
+        $('#categoria').val(datos[3]);
+    });
+}
+
+function DataTable() {
+    $('.AllDataTables').DataTable({
+        language: {
+            "processing": "Procesando...",
+            "lengthMenu": "Mostrar _MENU_ registros",
+            "zeroRecords": "No se encontraron resultados",
+            "emptyTable": "Ningún dato disponible en esta tabla",
+            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "search": "Buscar:",
+            "infoThousands": ",",
+            "loadingRecords": "Cargando...",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "aria": {
+                "sortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        }
+    })
 }

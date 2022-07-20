@@ -19,7 +19,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                     <div class="card-body">
                         <h4 class="card-title">Actualice la información del producto</h4>
                         <br>
-                        <form method="POST" action="/editProducto" id="editProducto">
+                        <form method="POST" id="editarProducto">
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-md-5">
@@ -54,17 +54,15 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 col-lg-12">
                                         <label>Descripción de la Categoría</label>
-                                        <form class="mt-3">
-                                            <div class="form-group">
-                                                <textarea class="form-control" rows="3" placeholder="Escriba aquí..." name="descripcion"><?php echo $descripcion ?></textarea>
-                                            </div>
-                                        </form>
+                                        <div class="form-group">
+                                            <textarea class="form-control" rows="3" placeholder="Escriba aquí..." name="descripcion"><?php echo $descripcion ?></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-actions">
                                 <div class="text-right">
-                                    <button type="submit" class="btn btn-info">Guardar</button>
+                                    <button type="submit" class="btn btn-info ">Guardar</button>
                                     <button type="reset" class="btn btn-dark">Cancelar</button>
                                 </div>
                             </div>
@@ -88,8 +86,9 @@ include_once __DIR__ . '/../../templates/administrador/footer.php';
 
 <?php
 $script = "
+
     <script src='/build/admin/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js'></script>
     <script src='/build/admin/dist/js/pages/datatable/datatable-basic.init.js'></script>
-    <script src='/build/js/admin.js'></script>
+    <script src='/build/js/admin.js></script>
     ";
 ?>

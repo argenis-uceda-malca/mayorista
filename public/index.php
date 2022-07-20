@@ -29,7 +29,7 @@ $router->get('/admin', [AdministradorController::class, 'home']);
 $router->post('/getInfo', [AdministradorController::class, 'getInfo']);
 $router->get('/viewProducto', [ProductoController::class, 'viewProducto']);
 $router->get('/editProducto', [ProductoController::class, 'editProducto']);
-$router->post('/editProducto', [ProductoController::class, 'editProducto']);
+$router->post('/editarProducto', [ProductoController::class, 'editarProducto']);
 $router->get('/addProducto', [ProductoController::class, 'addProducto']);
 
 $router->get('/login', [AdministradorController::class, 'login']);

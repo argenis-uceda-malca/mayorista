@@ -18,15 +18,18 @@ class ProductoController
         isAuth();
         $arreglo = [];
 
-        $consulta = "SELECT p.id, p.nombre, p.precio, c.nombre as categoria, c.descripcion ";
+        //$consulta = "SELECT p.id, p.nombre, p.precio, c.nombre as categoria ";
+        $consulta = "SELECT p.id, p.nombre, p.precio, p.idcategoria ";
         $consulta .= "FROM productos p ";
         $consulta .= "INNER JOIN categorias c ON c.id = p.idcategoria ";
         $consulta .= "ORDER BY p.id desc ";
 
         $arreglo = Producto::SQL($consulta);
-
+        
+        $categorias = Categorias::all();
         $router->renderAdmin('home/viewProducto', [
-            'arreglo' => $arreglo
+            'arreglo' => $arreglo,
+            'categorias' => $categorias
         ]);
     }
 
@@ -34,11 +37,7 @@ class ProductoController
     {
         session_start();
         isAuth();
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
-            $producto = new Producto($_POST);
-            $resultado = $producto->guardar();
-            debuguear($resultado);
-        }
+        
 
         $id = $_GET['id'];
         $producto = Producto::where('id', $id);
@@ -47,6 +46,7 @@ class ProductoController
         //debuguear($categoria);
 
         $router->renderAdmin('home/editProducto', [
+            'id' => $producto->id,
             'nombre' => $producto->nombre,
             'precio' => $producto->precio,
             'categoria' => $categoria->nombre,
@@ -60,11 +60,37 @@ class ProductoController
         session_start();
         isAuth();
 
-        $categorias = Categorias::all();
-        //debuguear($categoria);
+        $producto = new Producto($_POST);
+        $resultado= $producto->guardar($producto);
 
         $router->renderAdmin('home/addProducto', [
-            'categorias' => $categorias
+            'resultado' => $resultado
         ]);
+    }
+
+    public static function editarProducto(){
+        session_start();
+        isAuth();
+        
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            //debuguear($_POST);
+            $producto = new Producto($_POST);
+            $resultado = $producto->guardar();
+            if($resultado){
+                $respuesta = array(
+                    'resultado' => 'exito',
+                    'producto' => $producto,
+                    'resultado2' => $resultado,
+                    'post' => $_POST
+                );
+            }else{
+                $respuesta = array(
+                    'resultado' => 'error'
+                );
+            }
+            
+            
+        }
+        die(json_encode($respuesta));
     }
 }

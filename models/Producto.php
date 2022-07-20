@@ -5,14 +5,13 @@ namespace Model;
 class Producto extends ActiveRecord {
     // Base de datos
     protected static $tabla = 'productos';
-    protected static $columnasDB = ['id', 'nombre', 'precio', 'idcategoria', 'categoria', 'descripcion'];
+    protected static $columnasDB = ['id', 'nombre', 'precio', 'idcategoria'];
 
     public $id;
     public $nombre;
     public $precio;
     public $idcategoria;
-    public $categoria;
-    public $descripcion;
+
 
     public function __construct($args = [])
     {
@@ -20,8 +19,7 @@ class Producto extends ActiveRecord {
         $this->nombre = $args['nombre'] ?? '';
         $this->precio = $args['precio'] ?? '';
         $this->idcategoria = $args['idcategoria'] ?? '';
-        $this->categoria = $args['categoria'] ?? '';
-        $this->descripcion = $args['descripcion'] ?? '';
+
     }
 
     public function validar() {

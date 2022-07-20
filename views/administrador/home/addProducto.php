@@ -19,7 +19,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                     <div class="card-body">
                         <h4 class="card-title">Actualice la información del producto</h4>
                         <br>
-                        <form action="#">
+                        <form action="POST" id="addProducto">
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-md-5">
@@ -51,7 +51,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!--<div class="row">
                                     <div class="col-sm-12 col-md-12 col-lg-12">
                                         <label>Descripción de la Categoría</label>
                                         <form class="mt-3">
@@ -60,7 +60,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                             </div>
                                         </form>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                             <div class="form-actions">
                                 <div class="text-right">
@@ -85,6 +85,8 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
 <?php
 include_once __DIR__ . '/../../templates/administrador/footer.php';
 ?>
+
+
 
 <?php
 $script = "
