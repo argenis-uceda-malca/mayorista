@@ -23,12 +23,12 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-4">
-                            <h4 class="card-title">Lista de Productos</h4>
+                            <h4 class="card-title">Lista de Colaboradores</h4>
 
 
                             <div class="ml-auto">
                                 <div class="dropdown sub-dropdown">
-                                    <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-success" data-toggle="modal" data-target="#myModalNuevoProducto"><i class="fas fa-plus"></i> Agregar Nuevo</button>
+                                    <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-success" data-toggle="modal" data-target="#myModalNuevoColaborador"><i class="fas fa-plus"></i> Agregar Nuevo</button>
                                     <button class="btn btn-link text-muted dropdown-toggle" type="button" id="dd1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i data-feather="more-vertical"></i>
                                     </button>
@@ -48,41 +48,37 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                             <h5 class="text-dark mb-0 font-16 font-weight-medium">ID</h5>
                                         </th>
                                         <th class="border-0 font-14 font-weight-medium text-muted text-center">
-                                            <h5 class="text-dark mb-0 font-16 font-weight-medium">Producto</h5>
+                                            <h5 class="text-dark mb-0 font-16 font-weight-medium">Nombres</h5>
                                         </th>
                                         <th class="border-0 font-14 font-weight-medium text-muted text-center">
-                                            <h5 class="text-dark mb-0 font-16 font-weight-medium">S/. Precio</h5>
+                                            <h5 class="text-dark mb-0 font-16 font-weight-medium">Apellidos</h5>
                                         </th>
                                         <th class="border-0 font-14 font-weight-medium text-muted text-center">
-                                            <h5 class="text-dark mb-0 font-16 font-weight-medium">Categoria</h5>
+                                            <h5 class="text-dark mb-0 font-16 font-weight-medium">Correo</h5>
+                                        </th>
+                                        <th class="border-0 font-14 font-weight-medium text-muted text-center">
+                                            <h5 class="text-dark mb-0 font-16 font-weight-medium">Telefono</h5>
                                         </th>
                                         <th class="border-0 font-14 font-weight-medium text-muted"></th>
                                         <th class="border-0 font-14 font-weight-medium text-muted"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($arreglo as $key => $producto) { ?>
+                                    <?php foreach ($colaboradores as $key => $colaborador) { ?>
                                         <tr>
-                                            <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4"><?php echo $producto->id; ?>
+                                            <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4"><?php echo $colaborador->id; ?>
                                             </td>
-                                            <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4"><?php echo $producto->nombre; ?></td>
-                                            <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4"><?php echo $producto->precio; ?></td>
-                                            <?php foreach ($categorias as $categoria) {
-                                                if ($producto->idcategoria == $categoria->id) {
-                                                    $nombreCategoria = $categoria->nombre;
-                                                }
-                                            } ?>
-
-                                            <?php  ?>
-                                            <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4"><?php echo $nombreCategoria; ?></td>
+                                            <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4"><?php echo $colaborador->nombre; ?></td>
+                                            <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4"><?php echo $colaborador->apellido; ?></td>
+                                            <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4"><?php echo $colaborador->email; ?></td>
+                                            <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4"><?php echo $colaborador->telefono; ?></td>
                                             <td class="border-top-0 text-center px-2 py-4">
                                                 <!--<a class="btn waves-effect waves-light btn-rounded btn-outline-secondary " href="/editProducto?id=<?php echo $producto->id; ?>" title="Editar">Editar</a>-->
-                                                <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-secondary editbtn" data-toggle="modal" data-target="#myModalProducto" data-idcategoria="<?php echo $producto->idcategoria; ?>" id="">Editar </button>
+                                                <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-secondary editColaboradorbtn" data-toggle="modal" data-target="#myModalColaborador" data-password="<?php echo $colaborador->password; ?>">Editar </button>
                                             </td>
                                             <td class="border-top-0 text-center px-2 py-4">
                                                 <a href="#" type="button" class="btn waves-effect waves-light btn-rounded btn-outline-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                             </td>
-
                                         </tr>
                                     <?php } ?>
                                 </tbody>
@@ -97,38 +93,54 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
         <!-- *************************************************************** -->
 
         <!-- Edit modal content -->
-        <div id="myModalProducto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="myModalColaborador" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">Actualice el producto</h4>
+                        <h4 class="modal-title" id="myModalLabel">Actualice los datos</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
                     <div class="modal-body">
-                        <form action="POST" id="editarProducto">
+                        <form action="POST" id="editarColaborador">
                             <div class="form-body">
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Nombre</label>
-                                            <input type="text" class="form-control" name="nombre" id="nombre">
+                                            <label>Nombres</label>
+                                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>S/. Precio </label>
-                                            <input type="text" class="form-control" placeholder="S/." name="precio" id="precio">
+                                            <label>Apellidos </label>
+                                            <input type="text" class="form-control" placeholder="Apellidos" name="apellido" id="apellido" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Categoria</label>
+                                            <label>Correo Electrónico </label>
+                                            <input type="text" class="form-control" name="email" id="email" placeholder="Correo@correo.com" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Teléfono</label>
+                                            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Ingrese su teléfono" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Agregar como administrador?</label>
                                             <div class="input-group mb-3">
-                                                <select class="custom-select" id="inputGroupSelect02" name="idcategoria">
-                                                    <option selected id="idcategoria"></option>
-                                                    <?php foreach ($categorias as $categoria) { ?>
-                                                        <option value="<?php echo $categoria->id; ?>" ><?php echo $categoria->nombre; ?></option>
-                                                    <?php } ?>
+                                                <select class="custom-select" id="inputGroupSelect01" name="admin">
+                                                    <option value="0">No</option>
+                                                    <option value="1">Si</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -139,6 +151,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                             <div class="form-actions">
                                 <div class="text-right">
                                     <input type="hidden" name="id" id="id">
+                                    <input type="hidden" name="password" id="password">
                                     <button type="submit" class="btn btn-info">Guardar</button>
                                     <button type="reset" class="btn btn-dark">Cancelar</button>
                                 </div>
@@ -153,38 +166,55 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
         </div><!-- /.modal -->
 
         <!-- Add modal content -->
-        <div id="myModalNuevoProducto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="myModalNuevoColaborador" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">Registre un producto</h4>
+                        <h4 class="modal-title" id="myModalLabel">Agregue Colaborador</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
                     <div class="modal-body">
-                        <form action="POST" id="addProducto" >
+                        <form id="addColaborador" method="POST">
                             <div class="form-body">
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Nombre</label>
-                                            <input type="text" class="form-control" name="nombre" id="nombre" required>
+                                            <label>Nombres</label>
+                                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Precio</label>
-                                            <input type="text" class="form-control" placeholder="S/." name="precio" id="precio">
+                                            <label>Apellidos </label>
+                                            <input type="text" class="form-control" placeholder="Apellidos" name="apellido" id="apellido" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Categoria</label>
+                                            <label>Correo Electrónico </label>
+                                            <input type="text" class="form-control" name="email" id="email" placeholder="Correo@correo.com" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Teléfono</label>
+                                            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Ingrese su teléfono" required>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Agregar como administrador?</label>
                                             <div class="input-group mb-3">
-                                                <select class="custom-select" id="inputGroupSelect01" name="idcategoria">
-                                                    <option selected>Elegir</option>
-                                                    <?php foreach ($categorias as $categoria) { ?>
-                                                        <option value="<?php echo $categoria->id; ?>" id="categoria"><?php echo $categoria->nombre; ?></option>
-                                                    <?php } ?>
+                                                <select class="custom-select" id="inputGroupSelect01" name="admin">
+                                                    <option value="0">No</option>
+                                                    <option value="1">Si</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -206,7 +236,6 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-
 
     </div>
     <!-- ============================================================== -->

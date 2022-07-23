@@ -12,6 +12,7 @@ use Controllers\PageController;
 use Controllers\CartController;
 use Controllers\AdministradorController;
 use Controllers\ProductoController;
+use Controllers\ColaboradoresController;
 use MVC\Router;
 $router = new Router();
 
@@ -29,8 +30,18 @@ $router->get('/admin', [AdministradorController::class, 'home']);
 $router->post('/getInfo', [AdministradorController::class, 'getInfo']);
 $router->get('/viewProducto', [ProductoController::class, 'viewProducto']);
 $router->get('/editProducto', [ProductoController::class, 'editProducto']);
-$router->post('/editarProducto', [ProductoController::class, 'editarProducto']);
-$router->post('/addProducto', [ProductoController::class, 'addProducto']);
+$router->post('/editarProducto', [ProductoController::class, 'addEditarProducto']);
+$router->post('/addProducto', [ProductoController::class, 'addEditarProducto']);
+$router->get('/viewColaborador', [ColaboradoresController::class, 'ViewColaboradores']);
+$router->post('/addEditarColaborador', [ColaboradoresController::class, 'addEditarColaborador']);
+//$router->post('/addColaborador', [ColaboradoresController::class, 'addColaborador']);
+$router->post('/getInfoUser', [ColaboradoresController::class, 'getInfoUser']);
+$router->get('/cuenta', [ColaboradoresController::class, 'cuenta']);
+$router->post('/cuenta', [ColaboradoresController::class, 'cuenta']);
+
+$router->post('/crear-cuenta', [LoginController::class, 'crear']);
+$router->post('/crear-usuario', [LoginController::class, 'crearUser']);
+$router->get('/mensaje', [LoginController::class, 'mensaje']);
 
 $router->get('/login', [AdministradorController::class, 'login']);
 $router->post('/login', [AdministradorController::class, 'login']);

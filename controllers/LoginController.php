@@ -136,6 +136,9 @@ class LoginController {
     }
 
     public static function crear(Router $router) {
+        session_start();
+        isAuth();
+
         $usuario = new Usuario;
 
         // Alertas vacias
@@ -159,27 +162,68 @@ class LoginController {
                     $usuario->crearToken();
 
                     // Enviar el Email
-                    $email = new Email($usuario->nombre, $usuario->email, $usuario->token);
-                    $email->enviarConfirmacion();
+                    //$email = new Email($usuario->nombre, $usuario->email, $usuario->token);
+                    //$email->enviarConfirmacion();
 
                     // Crear el usuario
                     $resultado = $usuario->guardar();
                     // debuguear($usuario);
                     if($resultado) {
-                        header('Location: /mensaje');
+                       header('Location: /mensaje');
+                       
                     }
                 }
             }
         }
         
-        $router->render('auth/crear-cuenta', [
+        /*$router->render('auth/crear-cuenta', [
             'usuario' => $usuario,
             'alertas' => $alertas
-        ]);
+        ]);*/
+    }
+
+    public static function crearUser(Router $router){
+        session_start();
+        isAuth();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $usuario = new Usuario($_POST);
+
+            // Verificar que el usuario no este registrado
+            $resultado = $usuario->existeUsuario();
+
+            if($resultado->num_rows) {
+                $respuesta = array(
+                    'resultado' => 'alerta',
+                );
+            } else {
+                // Hashear el Password
+                $usuario->hashPassword();
+
+                // Generar un Token único
+                $usuario->crearToken();
+
+                // Crear el usuario
+                $resultado = $usuario->guardar();
+                // debuguear($usuario);
+                if($resultado) {
+                    $respuesta = array(
+                        'resultado' => 'exito',
+                        'resultado2' => $resultado,
+                        'post' => $_POST
+                    );
+                }
+            }
+        }
+        die(json_encode($respuesta));
     }
 
     public static function mensaje(Router $router) {
-        $router->render('auth/mensaje');
+        //$router->render('auth/mensaje');
+        session_start();
+        isAuth();
+
+        $router->renderAdmin('home/mensaje');
     }
 
     public static function confirmar(Router $router) {

@@ -25,7 +25,7 @@ class ProductoController
         $consulta .= "ORDER BY p.id desc ";
 
         $arreglo = Producto::SQL($consulta);
-        
+
         $categorias = Categorias::all();
         $router->renderAdmin('home/viewProducto', [
             'arreglo' => $arreglo,
@@ -37,7 +37,7 @@ class ProductoController
     {
         session_start();
         isAuth();
-        
+
 
         $id = $_GET['id'];
         $producto = Producto::where('id', $id);
@@ -55,21 +55,22 @@ class ProductoController
         ]);
     }
 
-    public static function addProducto(Router $router)
+    public static function addEditarProducto(Router $router)
     {
         session_start();
         isAuth();
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $producto = new Producto($_POST);
-            $resultado= $producto->guardar($producto);
-            if($resultado){
+            $resultado = $producto->guardar();
+
+            if ($resultado) {
                 $respuesta = array(
                     'resultado' => 'exito',
                     'producto' => $producto,
                     'resultado2' => $resultado,
                     'post' => $_POST
                 );
-            }else{
+            } else {
                 $respuesta = array(
                     'resultado' => 'error'
                 );
@@ -78,22 +79,21 @@ class ProductoController
         die(json_encode($respuesta));
     }
 
-    public static function editarProducto(){
+    public static function editarProducto()
+    {
         session_start();
         isAuth();
-        
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             //debuguear($_POST);
             $producto = new Producto($_POST);
             $resultado = $producto->guardar();
-            if($resultado){
+
+            if ($resultado) {
                 $respuesta = array(
                     'resultado' => 'exito',
-                    'producto' => $producto,
-                    'resultado2' => $resultado,
-                    'post' => $_POST
                 );
-            }else{
+            } else {
                 $respuesta = array(
                     'resultado' => 'error'
                 );

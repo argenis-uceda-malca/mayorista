@@ -28,8 +28,8 @@ class Email {
         $mail->Username = '24cef8ae1f95a1';
         $mail->Password = 'e2ccb83e34c0e1';
      
-         $mail->setFrom('cuentas@appsalon.com');
-         $mail->addAddress('cuentas@appsalon.com', 'AppSalon.com');
+         $mail->setFrom('cuentas@mayorista.com');
+         $mail->addAddress('cuentas@mayorista.com', 'mayorista.com');
          $mail->Subject = 'Confirma tu Cuenta';
 
          // Set HTML
@@ -37,7 +37,7 @@ class Email {
          $mail->CharSet = 'UTF-8';
 
          $contenido = '<html>';
-         $contenido .= "<p><strong>Hola " . $this->email .  "</strong> Has Creado tu cuenta en App Salón, solo debes confirmarla presionando el siguiente enlace</p>";
+         $contenido .= "<p><strong>Hola " . $this->email .  "</strong> Has Creado tu cuenta en Mayorista, solo debes confirmarla presionando el siguiente enlace</p>";
          $contenido .= "<p>Presiona aquí: <a href='http://localhost:3000/confirmar-cuenta?token=" . $this->token . "'>Confirmar Cuenta</a>";        
          $contenido .= "<p>Si tu no solicitaste este cambio, puedes ignorar el mensaje</p>";
          $contenido .= '</html>';

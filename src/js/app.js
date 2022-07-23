@@ -139,13 +139,18 @@ function eliminarCarrito() {
             }
         }).done(function (respuesta) {
             boton.parent('td').parent('tr').remove();
-            Swal.fire({
-                position: 'bottom-end',
-                //icon: 'success',
-                title: 'Eliminado',
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
                 showConfirmButton: false,
-                timer: 600
-            })
+                timer: 900,
+                //timerProgressBar: true,
+              })
+              
+              Toast.fire({
+                //icon: 'success',
+                title: 'Eliminado'
+              })
         });
     });
 }
