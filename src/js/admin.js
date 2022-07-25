@@ -464,6 +464,23 @@ function report(){
         //alert("hola");
         var datos = $(this).serializeArray();
         console.log(datos);
+        $.ajax({
+            type: 'POST',
+            data: datos,
+            url: "/repote",
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var resultado = data;
+            },
+            error: function (e) {
+                swal.fire(
+                    'UPS!!!',
+                    'Lo sentimos hubo un error inesperado',
+                    'error'
+                )
+            }
+        });
     });
 }
 
