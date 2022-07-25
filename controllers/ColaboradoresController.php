@@ -37,7 +37,6 @@ class ColaboradoresController
             $usuario->nombre = null;
             $usuario->apellido = null;
             $usuario->email = null;
-            $usuario->password = null;
             $usuario->telefono = null;
 
             $usuario->nombre = $colaborador->nombre;
@@ -46,7 +45,7 @@ class ColaboradoresController
             $usuario->telefono = $colaborador->telefono;
             $usuario->admin = $colaborador->admin;
 
-            $usuario->hashPassword();
+            //$usuario->hashPassword();
 
             $resultado = $usuario->guardar();
             if ($resultado) {

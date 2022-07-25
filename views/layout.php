@@ -22,7 +22,7 @@
 	<link rel="stylesheet" href="/build/css/slicknav.min.css" type="text/css">
 	<link rel="stylesheet" href="/build/css/style.css" type="text/css">
 
-
+	<link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" rel="stylesheet">
 </head>
 
 <body>

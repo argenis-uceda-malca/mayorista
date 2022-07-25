@@ -65,7 +65,7 @@ include_once __DIR__ . '../../../templates/header.php';
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Número de DNI<span>*</span></p>
-                                    <input type="text" name="dni" placeholder="Ingrese su DNI" class="form-control" required >
+                                    <input type="text" name="dni_usuario" placeholder="Ingrese su DNI" class="form-control" required >
                                     <div class="valid-feedback ">
                                         Todo bien
                                     </div>
@@ -143,7 +143,7 @@ include_once __DIR__ . '../../../templates/header.php';
                             </div>
                             <p>Si desea pagar contra entrega seleccione la casilla</p>
 
-                            <input type="hidden" name="fecha" value="2022">
+                            <!--<input type="hidden" name="fecha" value="2022">-->
                             <button type="submit" class="site-btn">CONFIRMAR</button>
 
                         </div>

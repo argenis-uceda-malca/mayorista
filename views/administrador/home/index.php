@@ -25,14 +25,8 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                             <h4 class="card-title">Registro de Pagos</h4>
                             <div class="ml-auto">
                                 <div class="dropdown sub-dropdown">
-                                    <button class="btn btn-link text-muted dropdown-toggle" type="button" id="dd1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i data-feather="more-vertical"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd1">
-                                        <a class="dropdown-item" href="#">Insert</a>
-                                        <a class="dropdown-item" href="#">Update</a>
-                                        <a class="dropdown-item" href="#">Delete</a>
-                                    </div>
+                                    <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-dark" data-toggle="modal" data-target="#reportModal"> Generar Reporte</button>
+
                                 </div>
                             </div>
                         </div>
@@ -108,7 +102,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                         <h4 class="modal-title" id="myModalLabel">Detalle de la venta</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
-                    <div class="modal-body" >
+                    <div class="modal-body">
 
                         <div id="MyModaltable_header">
                             <table class="table table_header no-wrap v-middle mb-0" id="registro">
@@ -148,7 +142,44 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
         </div><!-- /.modal -->
 
 
+        <!-- Report modal content -->
+        <div id="reportModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Genere su reportorte</h4>
+                                <code>Seleccione el intevalo de fecha</code>
+                                <form class="mt-4" id="report" method="POST">
+                                    <h6 class="card-subtitle">Fecha de inicio </h6>
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" name="fechaInicio" >
+                                    </div>
+                                    <h6 class="card-subtitle">Fecha de fin </h6>
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" name="fechafin" >
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-outline-success"><i class="far fa-file-excel"></i> Excel</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
 
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
     </div>
     <!-- ============================================================== -->

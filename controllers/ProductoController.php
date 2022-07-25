@@ -19,7 +19,7 @@ class ProductoController
         $arreglo = [];
 
         //$consulta = "SELECT p.id, p.nombre, p.precio, c.nombre as categoria ";
-        $consulta = "SELECT p.id, p.nombre, p.precio, p.idcategoria ";
+        $consulta = "SELECT p.id, p.nombre, p.precio, p.idcategoria, p.stock ";
         $consulta .= "FROM productos p ";
         $consulta .= "INNER JOIN categorias c ON c.id = p.idcategoria ";
         $consulta .= "ORDER BY p.id desc ";

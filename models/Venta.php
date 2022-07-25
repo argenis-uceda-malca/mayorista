@@ -15,7 +15,7 @@ class Venta extends ActiveRecord {
     public function __construct($args = [])
     {
         $this->id = $args['id'] ?? null;
-        $this->id_usuario = $args['dni'] ?? '';
-        $this->fecha = $args['fecha'] ?? '';
+        $this->dni_usuario = $args['dni_usuario'] ?? '';
+        $this->fecha = $args['fecha'] ?? date('Y-m-d');
     }
 }

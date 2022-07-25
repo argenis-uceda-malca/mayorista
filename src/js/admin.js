@@ -15,6 +15,7 @@ function iniciarApp() {
     //nuevoMostrarDatosUserModal();
     AddColaborador();
     getUsuario();
+    report();
 }
 
 function verificarLogin() {
@@ -62,6 +63,24 @@ function verificarLogin() {
 
 function editarTabla() {
     $('#registro').DataTable({
+        dom: "Bfrtip",
+        buttons: {
+            dom: {
+                button: {
+                    className: "btn"
+                }
+            },
+            buttons: [
+                {
+                    extend: "excel",              // Extend the excel button
+                    text : "Exportar Excel",
+                    className : "btn btn-outline-success ",
+                    excelStyles: {                // Add an excelStyles definition
+                        template: "blue_medium",  // Apply the 'blue_medium' template
+                    },
+                },
+            ],
+        },
         'paging': true,
         'lengthChange': true,
         'searching': true,
@@ -86,6 +105,7 @@ function editarTabla() {
             },
 
         }
+
     });
 }
 
@@ -229,13 +249,14 @@ function ActualizarProductoModal() {
         });
 
         $cat = $(this).data("idcategoria");
-        //console.log($cat);
+        console.log(datos);
         console.log(datos[3]);
         $('#id').val(datos[0]);
         $('#nombre').val(datos[1]);
         $('#precio').val(datos[2]);
         $('#idcategoria').text(datos[3]);
         $('#idcategoria').val($cat);
+        $('#stock').val(datos[4]);
 
     });
 }
@@ -434,6 +455,15 @@ function getUsuario() {
             }
         });
 
+    });
+}
+
+function report(){
+    $('#report').on('submit', function (e) {
+        e.preventDefault();
+        //alert("hola");
+        var datos = $(this).serializeArray();
+        console.log(datos);
     });
 }
 

@@ -138,5 +138,15 @@ class AdministradorController
         }
     }
 
+    public static function report(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $inicio = $_POST['fechaInicio'];
+            $fin = $_POST['fechaFin'];
+
+            $consulta= "";
+
+        }
+    }
+
     
 }
