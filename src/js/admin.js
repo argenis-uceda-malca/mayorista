@@ -1,3 +1,4 @@
+//const { on } = require("gulp");
 
 document.addEventListener('DOMContentLoaded', function () {
     iniciarApp();
@@ -10,12 +11,17 @@ function iniciarApp() {
     editarTabla();
     ObtenerProductoPorId();
     ActualizarProductoModal();
+    EstadoModal();
     ActualizarColaboradorModal();
     ActualizarColaborador();
+    ActualizarCategoriaModal();
+    ActualizarCategoria();
+    AddCategoria();
     //nuevoMostrarDatosUserModal();
     AddColaborador();
+    UpdateStado();
     getUsuario();
-    report();
+    //report();
 }
 
 function verificarLogin() {
@@ -73,7 +79,7 @@ function editarTabla() {
             buttons: [
                 {
                     extend: "excel",              // Extend the excel button
-                    text : "Exportar Excel",
+                    text : "Generar Excel",
                     className : "btn btn-outline-success ",
                     excelStyles: {                // Add an excelStyles definition
                         template: "blue_medium",  // Apply the 'blue_medium' template
@@ -217,9 +223,9 @@ function AddProducto() {
                         icon: 'success',
                         title: 'Registrado Corectamente'
                     })
-                    setTimeout(function () {
+                    /*setTimeout(function () {
                         window.location.href = '/viewProducto';
-                    }, 900);
+                    }, 900);*/
 
                 }
                 if (resultado.resultado == 'error') {
@@ -249,8 +255,8 @@ function ActualizarProductoModal() {
         });
 
         $cat = $(this).data("idcategoria");
-        console.log(datos);
-        console.log(datos[3]);
+        //console.log(datos);
+        //console.log(datos[3]);
         $('#id').val(datos[0]);
         $('#nombre').val(datos[1]);
         $('#precio').val(datos[2]);
@@ -258,6 +264,115 @@ function ActualizarProductoModal() {
         $('#idcategoria').val($cat);
         $('#stock').val(datos[4]);
 
+    });
+}
+
+function ActualizarCategoriaModal(){
+    $('.editbtnCategoria').on('click', function(e){
+        $tr = $(this).closest("tr");
+        var datos = $tr.children("td").map(function () {
+            return $(this).text();
+        });
+        //console.log(datos);
+        $('#id').val(datos[0]);
+        $('#idcategoria').text(datos[1]);
+        $('#idcategoria').val(datos[1]);
+        $('#descripcion').val(datos[2]);
+    });
+}
+
+function ActualizarCategoria(){
+    $('#editarCategoria').on('submit', function (e) {
+        e.preventDefault();
+        //alert("hola");
+        var datos = $(this).serializeArray();
+
+        $.ajax({
+            type: 'POST',
+            data: datos,
+            url: "/addEditarCategoria",
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var resultado = data;
+                if (resultado.resultado == 'exito') {
+                    swal.fire(
+                        'Exito',
+                        'Actualizado correctamente ',
+                        'success'
+                    )
+                    setTimeout(function () {
+                        window.location.href = '/viewCategorias';
+                    }, 600);
+
+                }
+                if (resultado.resultado == 'error') {
+                    swal.fire(
+                        'Error',
+                        'Error al Actualizar',
+                        'error'
+                    )
+                }
+            },
+            error: function (e) {
+                swal.fire(
+                    'UPS!!!',
+                    'Lo sentimos hubo un error inesperado',
+                    'error'
+                )
+            }
+        });
+    });
+}
+
+function AddCategoria(){
+    $('#addcategoria').on('submit', function (e) {
+        e.preventDefault();
+        //alert("hola");
+        var datos = $(this).serializeArray();
+        console.log(datos);
+        $.ajax({
+            type: 'POST',
+            data: datos,
+            url: "/addEditarCategoria",
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var resultado = data;
+                if (resultado.resultado == 'exito') {
+                    swal.fire(
+                        'Registro Exitoso',
+                        'Bienvenido',
+                        'success'
+                    )
+                    setTimeout(function () {
+                        window.location.href = '/viewCategorias';
+                    }, 900);
+
+                }
+                if (resultado.resultado == 'alerta') {
+                    swal.fire(
+                        'Advertencia!!!',
+                        'Ya existe un usuario con ese correo',
+                        'warning'
+                    )
+                }
+                if (resultado.resultado == 'error') {
+                    swal.fire(
+                        'Error',
+                        'Error al agregar',
+                        'error'
+                    )
+                }
+            },
+            error: function (e) {
+                swal.fire(
+                    'UPS!!!',
+                    'Lo sentimos hubo un error inesperado',
+                    'error'
+                )
+            }
+        });
     });
 }
 
@@ -467,11 +582,80 @@ function report(){
         $.ajax({
             type: 'POST',
             data: datos,
-            url: "/repote",
+            url: "/report",
             dataType: 'json',
             success: function (data) {
                 console.log(data);
                 var resultado = data;
+            },
+            error: function (e) {
+                swal.fire(
+                    'UPS!!!',
+                    'Lo sentimos hubo un error inesperado',
+                    'error'
+                )
+            }
+        });
+    });
+}
+
+function EstadoModal(){
+    $('.btnModalEstado').on('click', function (e) {
+        
+        $id = $(this).data('id')
+        //console.log($cat);
+        console.log($id);
+        $('#id').val($id);
+        
+    });
+}
+
+function UpdateStado(){
+    $('#updateEstado').on('submit', function (e) {
+        e.preventDefault();
+        //alert("hola");
+        var datos = $(this).serializeArray();
+        console.log(datos);
+        $.ajax({
+            type: 'POST',
+            data: datos,
+            url: "/updateEstado",
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var resultado = data;
+                if (resultado.resultado == 'exito') {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 900,
+                        //timerProgressBar: true,
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Estado actualizado'
+                    })
+                    setTimeout(function () {
+                        window.location.href = '/admin';
+                    }, 900);
+
+                }
+                if (resultado.resultado == 'alerta') {
+                    swal.fire(
+                        'Advertencia!!!',
+                        'Ya existe un usuario con ese correo',
+                        'warning'
+                    )
+                }
+                if (resultado.resultado == 'error') {
+                    swal.fire(
+                        'Error',
+                        'Error al agregar',
+                        'error'
+                    )
+                }
             },
             error: function (e) {
                 swal.fire(

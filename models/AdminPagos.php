@@ -4,7 +4,7 @@ namespace Model;
 
 class AdminPagos extends ActiveRecord {
     protected static $tabla = 'adminpagos';
-    protected static $columnasDB = ['ventaId', 'cantidad', 'total', 'nombres','apellidos', 'dni', 'telefono', 'email'];
+    protected static $columnasDB = ['ventaId', 'cantidad', 'total', 'nombres','apellidos', 'dni', 'telefono', 'email', 'fecha','estado'];
 
     public $ventaId;
     public $cantidad;
@@ -14,6 +14,8 @@ class AdminPagos extends ActiveRecord {
     public $dni;
     public $telefono;
     public $email;
+    public $fecha;
+    public $estado;
 
     public function __construct()
     {
@@ -25,5 +27,7 @@ class AdminPagos extends ActiveRecord {
         $this->dni = $args['dni'] ?? '';
         $this->telefono = $args['telefono'] ?? '';
         $this->email = $args['email'] ?? '';
+        $this->fecha = $args['fecha'] ?? '';
+        $this->estado = $args['estado'] ?? '';
     }
 }

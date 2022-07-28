@@ -20,7 +20,7 @@ class Email {
     public function enviarConfirmacion() {
 
          // create a new object
-         $mail = new PHPMailer();
+        $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->Host = 'smtp.mailtrap.io';
         $mail->SMTPAuth = true;

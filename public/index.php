@@ -13,6 +13,7 @@ use Controllers\CartController;
 use Controllers\AdministradorController;
 use Controllers\ProductoController;
 use Controllers\ColaboradoresController;
+use Controllers\CategoriaController;
 use MVC\Router;
 $router = new Router();
 
@@ -27,13 +28,20 @@ $router->get('/resumen', [CartController::class, 'resumen']);
 
 //Seccion Administrator
 $router->get('/admin', [AdministradorController::class, 'home']);
+$router->post('/report', [AdministradorController::class, 'report']);
+
 $router->post('/getInfo', [AdministradorController::class, 'getInfo']);
+$router->post('/updateEstado', [AdministradorController::class, 'updateEstado']);
+
 $router->get('/viewProducto', [ProductoController::class, 'viewProducto']);
 $router->get('/editProducto', [ProductoController::class, 'editProducto']);
 $router->post('/editarProducto', [ProductoController::class, 'addEditarProducto']);
 $router->post('/addProducto', [ProductoController::class, 'addEditarProducto']);
 $router->get('/viewColaborador', [ColaboradoresController::class, 'ViewColaboradores']);
 $router->post('/addEditarColaborador', [ColaboradoresController::class, 'addEditarColaborador']);
+$router->get('/viewCategorias', [CategoriaController::class, 'viewCategoria']);
+$router->post('/addEditarCategoria', [CategoriaController::class, 'addEditarCategoria']);
+
 //$router->post('/addColaborador', [ColaboradoresController::class, 'addColaborador']);
 $router->post('/getInfoUser', [ColaboradoresController::class, 'getInfoUser']);
 $router->get('/cuenta', [ColaboradoresController::class, 'cuenta']);

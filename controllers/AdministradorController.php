@@ -4,11 +4,18 @@ namespace Controllers;
 
 use Model\AdminPagos;
 use Classes\Email;
+use Classes\pdf;
 use Model\Usuario;
 use Model\DetalleVentaForId;
 use Model\Producto;
 use Model\Categorias;
+use Model\Venta;
 use MVC\Router;
+
+use Dompdf\Dompdf;
+use Dompdf\Option;
+use Dompdf\Exception as DomException;
+use Dompdf\Options;
 
 class AdministradorController
 {
@@ -20,7 +27,7 @@ class AdministradorController
 
         $arreglo = [];
 
-        $consulta = "SELECT c.ventaId , sum(c.cantidad) as cantidad, SUM(c.total) as total, cli.nombres, cli.apellidos, cli.dni, cli.telefono, cli.email ";
+        $consulta = "SELECT c.ventaId , sum(c.cantidad) as cantidad, SUM(c.total) as total, cli.nombres, cli.apellidos, cli.dni, cli.telefono, cli.email,v.fecha, v.estado ";
         $consulta .= "FROM ventas v ";
         $consulta .= "INNER JOIN carrito c ON v.id = c.ventaId ";
         $consulta .= "INNER JOIN clientes cli ON cli.id = c.id_usuario ";
@@ -31,6 +38,7 @@ class AdministradorController
 
         $ventas = AdminPagos::SQL($consulta);
 
+        //debuguear($ventas);
 
         $router->renderAdmin('home/index', [
             'ventas' => $ventas
@@ -138,15 +146,105 @@ class AdministradorController
         }
     }
 
-    public static function report(){
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    public static function report(Router $router)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $inicio = $_POST['fechaInicio'];
-            $fin = $_POST['fechaFin'];
+            $fin = $_POST['fechafin'];
 
-            $consulta= "";
+            //debuguear($_POST);
 
+            if (isset($_POST['excel'])) {
+
+                header('Content-Type:text/csv; charset=latin1');
+                header('Content-Disposition: attachment; filename="Reporte de Ventas.csv"');
+
+                $salida = fopen('php://output', 'w');
+
+                fputcsv($salida, array('ventaId', 'cantidad', 'total', 'nombres', 'apellidos', 'dni', 'telefono', 'email', 'fecha'));
+
+                $consulta = "SELECT c.ventaId , sum(c.cantidad) as cantidad, SUM(c.total) as total, cli.nombres, cli.apellidos, cli.dni, cli.telefono, cli.email, v.fecha ";
+                $consulta .= "FROM ventas v ";
+                $consulta .= "INNER JOIN carrito c ON v.id = c.ventaId ";
+                $consulta .= "INNER JOIN clientes cli ON cli.id = c.id_usuario ";
+                $consulta .= "INNER JOIN productos p ON p.id = c.id_producto ";
+                $consulta .= "WHERE v.fecha between '" . $inicio . "' and '" . $fin . "' ";
+                $consulta .= "group by c.ventaId ";
+                $consulta .= "ORDER BY ventaId desc ";
+
+                $ventas = AdminPagos::SQL($consulta);
+
+                foreach ($ventas as $venta) {
+                    fputcsv($salida, array($venta->ventaId, $venta->cantidad, $venta->total, $venta->nombres, $venta->apellidos, $venta->dni, $venta->telefono, $venta->email, $venta->fecha));
+                }
+            }
+            if (isset($_POST['pdf'])) {
+
+
+                $contenido = '<!DOCTYPE html>
+                  <html>
+                    <head>
+                    </head>
+                    <body>
+                         <h1>REPORTE DE PDF</h1>
+                    </body>
+                  </html>';
+                // Nombre del pdf
+                $filename = 'reporte.pdf';
+
+                // Opciones para prevenir errores con carga de imágenes
+                $options = new Options();
+                $options->set('isRemoteEnabled', true);
+
+                // Instancia de la clase
+                $dompdf = new Dompdf($options);
+
+                // Cargar el contenido HTML
+                $dompdf->loadHtml($contenido);
+
+                // Formato y tamaño del PDF
+                $dompdf->setPaper('A4', 'portrait');
+
+                // Renderizar HTML como PDF
+                $dompdf->render();
+
+                // Salida para descargar
+                $dompdf->stream($filename, ['Attachment' => true]);
+            }
         }
     }
+    public static function updateEstado()
+    {
+        session_start();
+        isAuth();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+            $consulta = Venta::where('id', $_POST['id']);
+            $venta = new Venta($_POST);
 
-    
+            $consulta->estado = null;
+            $consulta->estado = $venta->estado;
+
+            $resultado = $consulta->guardar();
+
+            $respuesta = array(
+                'resultado' => 'exito',
+                'consulta' => $consulta,
+                'venta' => $venta,
+                'resultado ' => $resultado
+                
+            );
+            
+            /*if ($resultado) {
+                $respuesta = array(
+                    'resultado' => 'exito',
+                );
+            } else {
+                $respuesta = array(
+                    'resultado' => 'error'
+                );
+            }*/
+            die(json_encode($respuesta));
+        }
+    }
 }

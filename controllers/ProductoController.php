@@ -101,4 +101,6 @@ class ProductoController
         }
         die(json_encode($respuesta));
     }
+
+    
 }

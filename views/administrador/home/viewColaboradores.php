@@ -74,7 +74,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                             <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4"><?php echo $colaborador->telefono; ?></td>
                                             <td class="border-top-0 text-center px-2 py-4">
                                                 <!--<a class="btn waves-effect waves-light btn-rounded btn-outline-secondary " href="/editProducto?id=<?php echo $producto->id; ?>" title="Editar">Editar</a>-->
-                                                <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-secondary editColaboradorbtn" data-toggle="modal" data-target="#myModalColaborador" data-password="<?php echo $colaborador->password; ?>">Editar </button>
+                                                <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-secondary editColaboradorbtn" data-toggle="modal" data-target="#myModalColaborador" data-password="<?php echo $colaborador->password; ?>"><i class="fa fa-edit" aria-hidden="true"></i></button>
                                             </td>
                                             <td class="border-top-0 text-center px-2 py-4">
                                                 <a href="#" type="button" class="btn waves-effect waves-light btn-rounded btn-outline-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
@@ -190,7 +190,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row"> x
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Correo Electrónico </label>

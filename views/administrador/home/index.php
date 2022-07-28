@@ -42,8 +42,12 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                             Monto
                                         </th>
                                         <th class="border-0 font-14 font-weight-medium text-muted text-center">
+                                            Fecha
+                                        </th>
+                                        <th class="border-0 font-14 font-weight-medium text-muted text-center">
                                             Estado
                                         </th>
+                                        <th class="border-0 font-14 font-weight-medium text-muted"></th>
                                         <th class="border-0 font-14 font-weight-medium text-muted"></th>
                                     </tr>
                                 </thead>
@@ -70,17 +74,19 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                             <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4">
                                                 S/. <?php echo $venta->total; ?>
                                             </td>
+                                            <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4">
+                                                <?php echo $venta->fecha; ?>
+                                            </td>
+                                            <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4">
+                                                <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-light btnModalEstado" data-toggle="modal" data-target="#myModalEstado" data-id="<?php echo $venta->ventaId; ?>" id="<?php echo $venta->ventaId; ?>"><i class="fa fa-circle text-<?php echo $venta->estado?> font-12" data-toggle="tooltip" data-placement="top" title="Estado"></i></button>
+                                            </td>
                                             <td class="border-top-0 text-center px-2 py-4">
                                                 <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-secondary btnModal" data-toggle="modal" data-target="#myModal" data-id="<?php echo $venta->ventaId; ?>" id="<?php echo $venta->ventaId; ?>"><i class="fas fa-eye"></i> Ver </button>
-
                                             </td>
                                             <td class="font-weight-medium text-dark border-top-0 px-2 py-4">
                                                 <a href="#" type="button" class="btn waves-effect waves-light btn-rounded btn-outline-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
-
-
-
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -147,7 +153,6 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
                     <div class="modal-body">
@@ -155,27 +160,67 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                             <div class="card-body">
                                 <h4 class="card-title">Genere su reportorte</h4>
                                 <code>Seleccione el intevalo de fecha</code>
-                                <form class="mt-4" id="report" method="POST">
+                                <form class="mt-4" id="report" method="POST" action="/report">
                                     <h6 class="card-subtitle">Fecha de inicio </h6>
                                     <div class="form-group">
-                                        <input type="date" class="form-control" name="fechaInicio" >
+                                        <input type="date" class="form-control" name="fechaInicio" value="<?php echo date("Y-m-d"); ?>">
                                     </div>
                                     <h6 class="card-subtitle">Fecha de fin </h6>
                                     <div class="form-group">
-                                        <input type="date" class="form-control" name="fechafin" >
+                                        <input type="date" class="form-control" name="fechafin" value="<?php echo date("Y-m-d"); ?>">
                                     </div>
                                     <div class="form-actions">
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-outline-success"><i class="far fa-file-excel"></i> Excel</button>
+                                            <button type="submit" class="btn btn-outline-success" name="excel"><i class="far fa-file-excel"></i> Excel</button>
+                                            <button type="submit" class="btn btn-outline-danger" name="pdf"><i class="far fa-file-pdf"></i> PDF</button>
                                         </div>
+
                                     </div>
                                 </form>
                             </div>
-
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+        <!-- Estado modal content -->
+        <div id="myModalEstado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Cambiar Estado</h4>
+                                <code>Estados: 'Atendido' 'En proceso' 'Cancelado'</code>
+                                <form class="mt-4" id="updateEstado" action="/updateEstado" method="POST">
+                                    <h6 class="card-subtitle">Estado del Pedido</h6>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <select class="custom-select" id="inputGroupSelect02" name="estado">
+                                                <option value="success">Atendido</option>
+                                                <option value="primary">Cancelado</option>
+                                                <option value="danger">En Proceso</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <div class="text-center">
+                                            <input type="hidden" name="id" id="id">
+                                            <button type="submit" class="btn btn-outline-primary">Guardar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -198,6 +243,7 @@ include_once __DIR__ . '/../../templates/administrador/footer.php';
 $script = "
     <script src='/build/admin/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js'></script>
     <script src='/build/admin/dist/js/pages/datatable/datatable-basic.init.js'></script>
+    <script src='//cdn.jsdelivr.net/npm/sweetalert2@11'></script>
     <script src='/build/js/admin.js'></script>
     ";
 ?>

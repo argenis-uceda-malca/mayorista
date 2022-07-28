@@ -18,10 +18,14 @@
                 <li class="nav-small-cap"><span class="hide-menu">Administrar</span></li>
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Inventario </span></a>
                     <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                        <li class="sidebar-item"><a href="form-inputs.html" class="sidebar-link"><span class="hide-menu"> Ver Inventario
+                        
+                        <li class="sidebar-item"><a href="/viewCategorias" class="sidebar-link"><span class="hide-menu"> Categorías
                                 </span></a>
                         </li>
-                        <li class="sidebar-item"><a href="form-checkbox-radio.html" class="sidebar-link"><span class="hide-menu"> Agregar Categorias
+                    </ul>
+                    <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                        
+                        <li class="sidebar-item"><a href="/viewCategorias" class="sidebar-link"><span class="hide-menu"> Marcas
                                 </span></a>
                         </li>
                     </ul>

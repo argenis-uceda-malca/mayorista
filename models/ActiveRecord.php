@@ -147,7 +147,7 @@ class ActiveRecord {
         $query .= join(', ', array_keys($atributos));
         $query .= " ) VALUES ('"; 
         $query .= join("', '", array_values($atributos));
-        $query .= " ') ";
+        $query .= "') ";
 
         //return json_encode(['query' => $query]);
         
