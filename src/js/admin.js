@@ -17,6 +17,9 @@ function iniciarApp() {
     ActualizarCategoriaModal();
     ActualizarCategoria();
     AddCategoria();
+    ActualizarMarcaModal();
+    AddMarca();
+    ActualizarMarca();
     //nuevoMostrarDatosUserModal();
     AddColaborador();
     UpdateStado();
@@ -79,8 +82,8 @@ function editarTabla() {
             buttons: [
                 {
                     extend: "excel",              // Extend the excel button
-                    text : "Generar Excel",
-                    className : "btn btn-outline-success ",
+                    text: "Generar Excel",
+                    className: "btn btn-outline-success ",
                     excelStyles: {                // Add an excelStyles definition
                         template: "blue_medium",  // Apply the 'blue_medium' template
                     },
@@ -201,14 +204,15 @@ function AddProducto() {
         e.preventDefault();
         //alert("hola");
         var datos = $(this).serializeArray();
-        console.log(datos);
+        //console.log(datos);
+        
         $.ajax({
             type: 'POST',
             data: datos,
             url: "/addProducto",
             dataType: 'json',
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 var resultado = data;
                 if (resultado.resultado == 'exito') {
                     const Toast = Swal.mixin({
@@ -223,9 +227,9 @@ function AddProducto() {
                         icon: 'success',
                         title: 'Registrado Corectamente'
                     })
-                    /*setTimeout(function () {
+                    setTimeout(function () {
                         window.location.href = '/viewProducto';
-                    }, 900);*/
+                    }, 900);
 
                 }
                 if (resultado.resultado == 'error') {
@@ -267,8 +271,8 @@ function ActualizarProductoModal() {
     });
 }
 
-function ActualizarCategoriaModal(){
-    $('.editbtnCategoria').on('click', function(e){
+function ActualizarCategoriaModal() {
+    $('.editbtnCategoria').on('click', function (e) {
         $tr = $(this).closest("tr");
         var datos = $tr.children("td").map(function () {
             return $(this).text();
@@ -281,7 +285,7 @@ function ActualizarCategoriaModal(){
     });
 }
 
-function ActualizarCategoria(){
+function ActualizarCategoria() {
     $('#editarCategoria').on('submit', function (e) {
         e.preventDefault();
         //alert("hola");
@@ -325,7 +329,7 @@ function ActualizarCategoria(){
     });
 }
 
-function AddCategoria(){
+function AddCategoria() {
     $('#addcategoria').on('submit', function (e) {
         e.preventDefault();
         //alert("hola");
@@ -342,7 +346,7 @@ function AddCategoria(){
                 if (resultado.resultado == 'exito') {
                     swal.fire(
                         'Registro Exitoso',
-                        'Bienvenido',
+                        '',
                         'success'
                     )
                     setTimeout(function () {
@@ -406,6 +410,115 @@ function ActualizarColaborador() {
                     swal.fire(
                         'Error',
                         'Error al Actualizar',
+                        'error'
+                    )
+                }
+            },
+            error: function (e) {
+                swal.fire(
+                    'UPS!!!',
+                    'Lo sentimos hubo un error inesperado',
+                    'error'
+                )
+            }
+        });
+    });
+}
+
+function ActualizarMarcaModal() {
+    $('.editbtnMarca').on('click', function (e) {
+        $tr = $(this).closest("tr");
+        var datos = $tr.children("td").map(function () {
+            return $(this).text();
+        });
+        //console.log(datos);
+        $('#id').val(datos[0]);
+        $('#idMarca').text(datos[1]);
+        $('#idMarca').val(datos[1]);
+        $('#descripcion').val(datos[2]);
+    });
+}
+
+function ActualizarMarca() {
+    $('#editarMarca').on('submit', function (e) {
+        e.preventDefault();
+        //alert("hola");
+        var datos = $(this).serializeArray();
+
+        $.ajax({
+            type: 'POST',
+            data: datos,
+            url: "/addEditarMarca",
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var resultado = data;
+                if (resultado.resultado == 'exito') {
+                    swal.fire(
+                        'Exito',
+                        'Actualizado correctamente ',
+                        'success'
+                    )
+                    setTimeout(function () {
+                        window.location.href = '/viewMarcas';
+                    }, 600);
+
+                }
+                if (resultado.resultado == 'error') {
+                    swal.fire(
+                        'Error',
+                        'Error al Actualizar',
+                        'error'
+                    )
+                }
+            },
+            error: function (e) {
+                swal.fire(
+                    'UPS!!!',
+                    'Lo sentimos hubo un error inesperado',
+                    'error'
+                )
+            }
+        });
+    });
+}
+
+function AddMarca() {
+    $('#addMarca').on('submit', function (e) {
+        e.preventDefault();
+        //alert("hola");
+        var datos = $(this).serializeArray();
+        console.log(datos);
+        $.ajax({
+            type: 'POST',
+            data: datos,
+            url: "/addEditarMarca",
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var resultado = data;
+                if (resultado.resultado == 'exito') {
+                    swal.fire(
+                        'Registro Exitoso',
+                        '',
+                        'success'
+                    )
+                    setTimeout(function () {
+                        window.location.href = '/viewMarcas';
+                    }, 900);
+
+                }
+                if (resultado.resultado == 'alerta') {
+                    swal.fire(
+                        'Advertencia!!!',
+                        'Ya existe un usuario con ese correo',
+                        'warning'
+                    )
+                }
+                if (resultado.resultado == 'error') {
+                    swal.fire(
+                        'Error',
+                        'Error al agregar',
                         'error'
                     )
                 }
@@ -549,7 +662,7 @@ function getUsuario() {
                 if (resultado.resultado == 'alerta') {
                     swal.fire(
                         'Error!!!',
-                        'Error al ingresar contraseña',
+                        'La contraseña actual no es correcta',
                         'warning'
                     )
                 }
@@ -573,7 +686,7 @@ function getUsuario() {
     });
 }
 
-function report(){
+function report() {
     $('#report').on('submit', function (e) {
         e.preventDefault();
         //alert("hola");
@@ -599,18 +712,18 @@ function report(){
     });
 }
 
-function EstadoModal(){
+function EstadoModal() {
     $('.btnModalEstado').on('click', function (e) {
-        
+
         $id = $(this).data('id')
         //console.log($cat);
         console.log($id);
         $('#id').val($id);
-        
+
     });
 }
 
-function UpdateStado(){
+function UpdateStado() {
     $('#updateEstado').on('submit', function (e) {
         e.preventDefault();
         //alert("hola");
@@ -668,3 +781,16 @@ function UpdateStado(){
     });
 }
 
+function ValidateInput(array) {
+
+    for (i in array) {
+        if (array[i].value == "") {
+            $('#nombre').addClass('is-invalid');
+
+        } else {
+            console.log('nombre lleno');
+        }
+    }
+
+
+}

@@ -59,7 +59,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                         <th class="border-0 font-14 font-weight-medium text-muted text-center">
                                             <h5 class="text-dark mb-0 font-16 font-weight-medium">Stock</h5>
                                         </th>
-                                        
+
                                         <th class="border-0 font-14 font-weight-medium text-muted"></th>
                                         <th class="border-0 font-14 font-weight-medium text-muted"></th>
                                     </tr>
@@ -80,7 +80,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                             <?php  ?>
                                             <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4"><?php echo $nombreCategoria; ?></td>
                                             <td class="border-top-0 text-center font-weight-medium text-muted px-2 py-4"><?php echo $producto->stock; ?></td>
-                                            
+
                                             <td class="border-top-0 text-center px-2 py-4">
                                                 <!--<a class="btn waves-effect waves-light btn-rounded btn-outline-secondary " href="/editProducto?id=<?php echo $producto->id; ?>" title="Editar">Editar</a>-->
                                                 <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-secondary editbtn" data-toggle="modal" data-target="#myModalProducto" data-idcategoria="<?php echo $producto->idcategoria; ?>" id=""><i class="fa fa-edit" aria-hidden="true"></i></button>
@@ -117,13 +117,13 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                     <div class="col-md-9">
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input type="text" class="form-control" name="nombre" id="nombre">
+                                            <input type="text" class="form-control" name="nombre" id="nombre" required>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>S/. Precio </label>
-                                            <input type="number" class="form-control" placeholder="S/." name="precio" id="precio">
+                                            <input type="number" class="form-control" placeholder="S/." name="precio" id="precio" required>
                                         </div>
                                     </div>
                                 </div>
@@ -132,9 +132,9 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                         <div class="form-group">
                                             <label>Categoria</label>
                                             <div class="input-group mb-3">
-                                                <select class="custom-select" id="inputGroupSelect02" name="idcategoria">
+                                                <select class="custom-select" id="inputGroupSelect02" name="idcategoria" required>
                                                     <?php foreach ($categorias as $categoria) { ?>
-                                                        <option  id="idcategoria" value="<?php echo $categoria->id; ?>"><?php echo $categoria->nombre; ?></option>
+                                                        <option id="idcategoria" value="<?php echo $categoria->id; ?>"><?php echo $categoria->nombre; ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </div>
@@ -143,7 +143,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Stock </label>
-                                            <input type="number" class="form-control" placeholder="Stock" name="stock" id="stock">
+                                            <input type="number" class="form-control" placeholder="Stock" name="stock" id="stock" required>
                                         </div>
                                     </div>
                                 </div>
@@ -174,19 +174,19 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" id="addProducto">
+                        <form method="POST" id="addProducto" class="needs-validation" >
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-md-9">
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese Nombre del Producto" required>
+                                            <input type="text" class="form-control " name="nombre" id="nombre" placeholder="Ingrese Nombre del Producto" required>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Precio</label>
-                                            <input type="number" class="form-control" placeholder="S/." name="precio" id="precio">
+                                            <input type="number" class="form-control" placeholder="S/." name="precio" id="precio" required>
                                         </div>
                                     </div>
 
@@ -196,8 +196,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                         <div class="form-group">
                                             <label>Categoria</label>
                                             <div class="input-group mb-3">
-                                                <select class="custom-select" id="inputGroupSelect01" name="idcategoria">
-                                                    <option selected>Elegir</option>
+                                                <select class="custom-select" id="inputGroupSelect01" name="idcategoria" required>
                                                     <?php foreach ($categorias as $categoria) { ?>
                                                         <option value="<?php echo $categoria->id; ?>" id="categoria"><?php echo $categoria->nombre; ?></option>
                                                     <?php } ?>
@@ -208,7 +207,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Stock </label>
-                                            <input type="number" class="form-control" placeholder="Stock" name="stock" id="stock">
+                                            <input type="number" class="form-control" placeholder="Stock" name="stock" id="stock" required>
                                         </div>
                                     </div>
                                 </div>
@@ -257,6 +256,7 @@ $script = "
         <script src='https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.2.0/js/buttons.html5.styles.templates.min.js'></script>
     
 
+    
     <script src='/build/js/admin.js'></script>
     ";
 ?>

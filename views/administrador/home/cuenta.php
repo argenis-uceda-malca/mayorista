@@ -45,13 +45,13 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required value="<?php echo $arreglo->nombre; ?>">
+                                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" pattern="^[a-zA-Z]+" required value="<?php echo $arreglo->nombre; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Apellidos </label>
-                                            <input type="text" class="form-control" placeholder="Apellidos" name="apellido" id="apellido" value="<?php echo $arreglo->apellido; ?>" required>
+                                            <input type="text" class="form-control" placeholder="Apellidos" name="apellido" id="apellido" pattern="^[a-zA-Z]+" value="<?php echo $arreglo->apellido; ?>" required>
                                         </div>
                                     </div>
                                 </div>
@@ -59,13 +59,13 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                     <div class="col-md-7">
                                         <div class="form-group">
                                             <label>Correo Electrónico </label>
-                                            <input type="text" class="form-control" name="email" id="email" placeholder="Correo@correo.com" value="<?php echo $arreglo->email; ?>" required>
+                                            <input type="email" class="form-control" name="email" id="email" placeholder="Correo@correo.com" value="<?php echo $arreglo->email; ?>" required>
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label>Teléfono</label>
-                                            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Ingrese su teléfono" value="<?php echo $arreglo->telefono; ?>" required>
+                                            <input type="number" class="form-control" name="telefono" id="telefono" placeholder="Ingrese su teléfono" value="<?php echo $arreglo->telefono; ?>" required>
                                         </div>
                                     </div>
                                 </div>
@@ -73,13 +73,13 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label class="text-dark" for="pwd">Contraseña Actual</label>
-                                            <input class="form-control" id="pwd" name="password" type="password" placeholder="Ingresa tu contraseña">
+                                            <input class="form-control" id="pwd" name="password" type="password" placeholder="Ingresa tu contraseña" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label class="text-dark" for="pwd">Contraseña Nueva</label>
-                                            <input class="form-control" id="pwd" name="newpassword" type="password" placeholder="Ingresa tu contraseña">
+                                            <input class="form-control" id="pwd" name="newpassword" type="password" placeholder="Ingresa tu nueva contraseña" required>
                                         </div>
                                     </div>
                                 </div>

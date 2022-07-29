@@ -69,7 +69,7 @@
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="ejemplo">
                 <?php
                 $total = 0;
                 if (isset($_SESSION['carrito'])) {
@@ -89,7 +89,7 @@
 
                         <div class="quantity">
                           <div class="pro-qty">
-                            <span class="dec qtybtn">&minus;</span>
+                            <span class="dec qtybtn" id="dec<?php echo $arregloCarrito[$i]['id'];?>" data-id="<?php echo $arregloCarrito[$i]['id']; ?>">&minus;</span>
                             <input class="txtCantidad" data-precio="<?php echo $arregloCarrito[$i]['precio']; ?>" data-id="<?php echo $arregloCarrito[$i]['id']; ?>" data-cantidad="<?php echo $arregloCarrito[$i]['cantidad']; ?>" type="text" value="<?php echo $arregloCarrito[$i]['cantidad']; ?>">
                             <span class="inc qtybtn">&plus;</span>
                           </div>
@@ -97,7 +97,7 @@
 
                       </td>
                       <td class="shoping__cart__total cant<?php echo $arregloCarrito[$i]['id']; ?>">
-                        <span>S/. </span>
+                        <!--<span>S/. </span>-->
                         <?php echo $arregloCarrito[$i]['precio'] * $arregloCarrito[$i]['cantidad']; ?>
                       </td>
                       <td class="shoping__cart__item__close">

@@ -65,7 +65,7 @@ include_once __DIR__ . '../../../templates/header.php';
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Número de DNI<span>*</span></p>
-                                    <input type="text" name="dni_usuario" placeholder="Ingrese su DNI" class="form-control" required >
+                                    <input type="number" name="dni" placeholder="Ingrese su DNI" class="form-control" required >
                                     <div class="valid-feedback ">
                                         Todo bien
                                     </div>
@@ -84,13 +84,13 @@ include_once __DIR__ . '../../../templates/header.php';
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Celular<span>*</span></p>
-                                    <input type="text" name="telefono" class="form-control">
+                                    <input type="number" name="telefono" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Email<span>*</span></p>
-                                    <input type="text" name="email" class="form-control">
+                                    <input type="email" name="email" class="form-control" required>
                                 </div>
                             </div>
                         </div>

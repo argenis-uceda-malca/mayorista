@@ -14,6 +14,7 @@ use Controllers\AdministradorController;
 use Controllers\ProductoController;
 use Controllers\ColaboradoresController;
 use Controllers\CategoriaController;
+use Controllers\MarcaController;
 use MVC\Router;
 $router = new Router();
 
@@ -41,6 +42,8 @@ $router->get('/viewColaborador', [ColaboradoresController::class, 'ViewColaborad
 $router->post('/addEditarColaborador', [ColaboradoresController::class, 'addEditarColaborador']);
 $router->get('/viewCategorias', [CategoriaController::class, 'viewCategoria']);
 $router->post('/addEditarCategoria', [CategoriaController::class, 'addEditarCategoria']);
+$router->get('/viewMarcas', [MarcaController::class, 'viewMarca']);
+$router->post('/addEditarMarca', [MarcaController::class, 'addEditarMarca']);
 
 //$router->post('/addColaborador', [ColaboradoresController::class, 'addColaborador']);
 $router->post('/getInfoUser', [ColaboradoresController::class, 'getInfoUser']);

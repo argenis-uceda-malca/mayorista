@@ -162,7 +162,7 @@ class CartController
 
     $nombres = $_POST['nombres'];
     $apellidos = $_POST['apellidos'];
-    $dni = s($_POST['dni_usuario']);
+    $dni = s($_POST['dni']);
 
     $venta = new Venta($_POST);
     $cliente = new Cliente($_POST);

@@ -97,7 +97,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                         <div class="form-group">
                                             <label>Categoria</label>
                                             <div class="input-group mb-3">
-                                                <select class="custom-select" id="inputGroupSelect02" name="nombre">
+                                                <select class="custom-select" id="inputGroupSelect02" name="nombre" required>
                                                     <?php foreach ($categorias as $categoria) { ?>
                                                         <option value="<?php echo $categoria->nombre; ?>" id="idcategoria"><?php echo $categoria->nombre; ?></option>
                                                     <?php } ?>
@@ -109,7 +109,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <textarea class="form-control" rows="4" placeholder="Escribir aquí" id="descripcion" name="descripcion"></textarea>
+                                            <textarea class="form-control" rows="4" placeholder="Escribir aquí" id="descripcion" name="descripcion" required></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +156,7 @@ include_once __DIR__ . '/../../templates/administrador/sidebar.php';
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <textarea class="form-control" rows="4" placeholder="Escribir aquí" name="descripcion"></textarea>
+                                            <textarea class="form-control" rows="4" placeholder="Escribir aquí" name="descripcion" required></textarea>
                                         </div>
                                     </div>
                                 </div>

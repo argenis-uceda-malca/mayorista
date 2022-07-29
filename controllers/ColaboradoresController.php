@@ -30,7 +30,7 @@ class ColaboradoresController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $usuario = Usuario::where('email', $_POST['email']);
+            $usuario = Usuario::where('id', $_POST['id']);
 
             $colaborador = new Usuario($_POST);
 

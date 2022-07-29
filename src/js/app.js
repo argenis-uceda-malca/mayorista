@@ -36,6 +36,7 @@ function iniciarApp() {
     //seleccionarHora(); // Añade la hora de la cita en el objeto
 
     //mostrarResumen(); // Muestra el resumen de la cita
+    //VerificarCantidad();
 }
 
 function mostrarSeccion() {
@@ -145,12 +146,12 @@ function eliminarCarrito() {
                 showConfirmButton: false,
                 timer: 900,
                 //timerProgressBar: true,
-              })
-              
-              Toast.fire({
+            })
+
+            Toast.fire({
                 //icon: 'success',
                 title: 'Eliminado'
-              })
+            })
         });
     });
 }
@@ -174,17 +175,21 @@ function cambiarCantidad() {
     $('.qtybtn').click(function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
-
+        var estado;
         if ($button.hasClass('inc')) {
             var newVal = parseFloat(oldValue) + 1;
-
+            estado = false;
         } else {
             // Don't allow decrementing below zero
             if (oldValue > 0) {
+                estado = false;
                 var newVal = parseFloat(oldValue) - 1;
+                if (oldValue == 1) {
+                    //$button.css('pointer-events', 'none');
+                    //$button.css('cursor', 'not-allowed');
+                    //$button.off("click");
+                }
             } else {
-                $button.css('pointer-events', 'none');
-                $button.css('cursor', 'not-allowed');
                 newVal = 0;
             }
         }
@@ -194,23 +199,26 @@ function cambiarCantidad() {
         var id = $(this).parent('div').find('input').data('id');
         var cantidad = $(this).parent('div').find('input').val();
 
-        /*console.log(precio);
-        console.log(cantidad);*/
+        //console.log(precio);
+        //console.log(newVal);
 
         if ($button.hasClass('inc')) {
             incrementar(cantidad, precio, id, 1);
         } else {
-            incrementar(cantidad, precio, id, 2);
+            if(estado==false){
+                if(cantidad==0){
+                    estado=true;
+                }
+                incrementar(cantidad, precio, id, 2);
+            }
         }
-
-
     });
 }
 
 function incrementar(cantidad, precio, id, operacion) {
     var inicio = $(".cant" + id).text();
     var mul = parseFloat(cantidad) * parseFloat(precio);
-    $(".cant" + id).text(mul);
+    $(".cant" + id).text('S/.'+mul);
 
     if (operacion == 3) {
         var resultado = parseInt(mul) - parseInt(inicio);
@@ -219,7 +227,7 @@ function incrementar(cantidad, precio, id, operacion) {
          console.log(resultado);*/
         actualizarTotal(resultado, operacion);
     } else {
-        if (cantidad != 0) {
+        if (cantidad >= 0) {
             actualizarTotal(precio, operacion);
         }
     }
@@ -263,9 +271,9 @@ function Verificarcheckbox() {
         var miCheckbox = $(this);
 
         if (miCheckbox.prop('checked')) {
-            $(this).prop('value','1');
+            $(this).prop('value', '1');
         } else {
-            $(this).prop('value','0');
+            $(this).prop('value', '0');
         }
     });
 }
@@ -617,5 +625,22 @@ async function reservarCita() {
 
 
     // console.log([...datos]);
+
+}
+
+function VerificarCantidad() {
+    var total_col = 0;
+    
+    //Recorro todos los tr ubicados en el tbody
+    $('#ejemplo').find('tr').each(function (i, el) {
+
+        //Voy incrementando las variables segun la fila ( .eq(0) representa la fila 1 )     
+        total_col += parseFloat($(this).find('td').eq(4).text());
+        
+    });
+    //Muestro el resultado en el th correspondiente a la columna
+    
+    console.log(total_col);
+
 
 }
