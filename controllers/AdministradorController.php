@@ -180,13 +180,14 @@ class AdministradorController
             }
             if (isset($_POST['pdf'])) {
 
-
-                $contenido = '<!DOCTYPE html>
+/*
+                $contenido = 
+                '<!DOCTYPE html>
                   <html>
                     <head>
                     </head>
                     <body>
-                         <h1>REPORTE DE PDF</h1>
+                         <h1>REPORTE DE PDF controlador</h1>
                     </body>
                   </html>';
                 // Nombre del pdf
@@ -209,7 +210,7 @@ class AdministradorController
                 $dompdf->render();
 
                 // Salida para descargar
-                $dompdf->stream($filename, ['Attachment' => true]);
+                $dompdf->stream($filename, ['Attachment' => true]);*/
             }
         }
     }
